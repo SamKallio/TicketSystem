@@ -40,6 +40,11 @@ function TicketSystem() {
         toggleView={setCurrentView}
         openContent={openContent}
       ></Navbar>
+      <footer id="footer">
+        © Samuli Kalliomäki
+        <br />
+        Made with React and Material CSS
+      </footer>
     </ThemeProvider>
   );
 }
