@@ -18,11 +18,11 @@ function Navbar({ view, toggleView, openContent }) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Ticket System
           </Typography>
-          {view === 0 ? (
+          {!view ? (
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => toggleView(1)}
+              onClick={() => toggleView()}
             >
               Client View
             </Button>
@@ -30,7 +30,7 @@ function Navbar({ view, toggleView, openContent }) {
             <Button
               variant="contained"
               color="third"
-              onClick={() => toggleView(0)}
+              onClick={() => toggleView()}
             >
               Support View
             </Button>

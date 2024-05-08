@@ -8,3 +8,15 @@ body {
   padding: 10px;
   text-align: center;
 }
+
+.headers {
+  text-shadow: 1px 1px 2px #262626;
+  margin: 0;
+  padding: 0;
+}
+
+.errorText {
+  color: red;
+  margin: 0;
+  padding: 0;
+}

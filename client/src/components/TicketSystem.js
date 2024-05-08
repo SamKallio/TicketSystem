@@ -2,22 +2,23 @@ import React from "react";
 import { useState } from "react";
 import Navbar from "./Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Button from "@mui/material/Button";
+import NewTicket from "./NewTicket";
+import MyTickets from "./MyTickets";
 
-//Custom palette
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1976d2", // Example primary color (blue)
+      main: "#1976d2", //Blue
     },
     secondary: {
-      main: "#109612", // Example primary color (blue)
+      main: "#109612", //Green
     },
     third: {
-      main: "#dc004e", // Example secondary color (red)
+      main: "#dc004e", //Red
     },
     background: {
-      default: "#f5f5f5", // Default background color
+      default: "#f4f4f4", // Default background color
+      dark: "#f8f8f8", // Default background color
     },
     text: {
       primary: "#333", // Primary text color
@@ -26,24 +27,32 @@ const theme = createTheme({
 });
 
 function TicketSystem() {
-  const [currentView, setCurrentView] = useState(0);
+  const [currentView, setCurrentView] = useState(false);
+  const [selected, setSelected] = useState(0);
+
+  const changeView = (v) => {
+    setSelected(0);
+    setCurrentView(!currentView);
+  };
 
   const openContent = (event) => {
     const data = event.currentTarget.dataset.value;
-    console.log("Data: ", data);
+    setSelected(data);
   };
 
   return (
     <ThemeProvider theme={theme}>
       <Navbar
         view={currentView}
-        toggleView={setCurrentView}
+        toggleView={changeView}
         openContent={openContent}
       ></Navbar>
+      {selected === "New Ticket" && <NewTicket />}
+      {selected === "My Tickets" && <MyTickets />}
       <footer id="footer">
         © Samuli Kalliomäki
         <br />
-        Made with React and Material CSS
+        Made with React and Material UI
       </footer>
     </ThemeProvider>
   );
