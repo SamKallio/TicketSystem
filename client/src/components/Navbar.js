@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,13 +7,11 @@ import Button from "@mui/material/Button";
 import Options from "./Options";
 
 function Navbar({ view, toggleView, openContent }) {
-  const [menu, setMenu] = useState(false);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Options drawer={menu} view={view} openContent={openContent} />
+          <Options view={view} openContent={openContent} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Ticket System
           </Typography>
@@ -32,7 +29,7 @@ function Navbar({ view, toggleView, openContent }) {
               color="third"
               onClick={() => toggleView()}
             >
-              Support View
+              Admin View
             </Button>
           )}
         </Toolbar>

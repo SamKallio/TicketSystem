@@ -11,14 +11,10 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { userSections } from "../models/TicketModel";
 
-const users = {
-  USER: ["New Ticket", "My Tickets", "Help"],
-  ADMIN: ["New Ticket", "Tickets", "Assigned", "Finished"],
-};
-
-export default function Options({ drawer, view, openContent }) {
-  const [open, setOpen] = React.useState(drawer);
+export default function Options({ view, openContent }) {
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => {
     setOpen(newOpen);
@@ -30,12 +26,12 @@ export default function Options({ drawer, view, openContent }) {
       role="presentation"
       onClick={() => toggleDrawer(false)}
     >
-      {view === 0 ? (
+      {!view ? (
         <div style={{ margin: "8px", padding: "4px" }}>
           <List>
             <h2>Client View</h2>
             <Divider />
-            {users.USER.map((text, index) => (
+            {userSections.USER.map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={openContent} data-value={text}>
                   <ListItemIcon>
@@ -49,10 +45,10 @@ export default function Options({ drawer, view, openContent }) {
         </div>
       ) : (
         <div style={{ margin: "6px", padding: "4px" }}>
-          <h2>Support View</h2>
+          <h2>Admin View</h2>
           <Divider />
           <List>
-            {users.ADMIN.map((text, index) => (
+            {userSections.ADMIN.map((text, index) => (
               <ListItem key={text} disablePadding>
                 <ListItemButton onClick={openContent} data-value={text}>
                   <ListItemIcon>

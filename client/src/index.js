@@ -5,8 +5,4 @@ import "material-icons/iconfont/material-icons.css";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <React.StrictMode>
-    <TicketSystem />
-  </React.StrictMode>
-);
+root.render(<TicketSystem />);
