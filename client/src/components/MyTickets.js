@@ -24,7 +24,6 @@ function MyTickets({ tickets, username, editTicket, deleteTicket }) {
             <Grid xs={2.5} key={index}>
               <Ticket
                 ticket={ticket}
-                username={username}
                 editTicket={editTicket}
                 deleteTicket={deleteTicket}
               />

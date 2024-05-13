@@ -26,7 +26,7 @@ export default function Options({ view, openContent }) {
       role="presentation"
       onClick={() => toggleDrawer(false)}
     >
-      {!view ? (
+      {view === "DefaultUser" ? (
         <div style={{ margin: "8px", padding: "4px" }}>
           <List>
             <h2>Client View</h2>

@@ -74,19 +74,19 @@ const allTickets = [
 ];
 
 function TicketSystem() {
-  const [currentView, setCurrentView] = useState(false);
-  const [selected, setSelected] = useState("About");
+  const [currentUser, setCurrentUser] = useState("DefaultUser");
+  const [selectedOption, setSelectedOption] = useState("About");
   const [myTickets, setMyTickets] = useState(allTickets);
   const [editingTicket, setEditingTicket] = useState(0);
 
-  const changeView = (v) => {
-    setSelected("");
-    setCurrentView(!currentView);
+  const toggleView = (v) => {
+    setSelectedOption("");
+    setCurrentUser(v);
   };
 
   const openContent = (event) => {
     const data = event.currentTarget.dataset.value;
-    setSelected(data);
+    setSelectedOption(data);
     setEditingTicket(0);
   };
 
@@ -110,14 +110,14 @@ function TicketSystem() {
         return newTickets;
       });
 
-      setSelected("My Tickets");
+      setSelectedOption("My Tickets");
     }
   };
 
   const editTicket = (ticket) => {
     if (ticket) {
       setEditingTicket(ticket);
-      setSelected("New Ticket");
+      setSelectedOption("New Ticket");
     }
   };
 
@@ -133,8 +133,8 @@ function TicketSystem() {
   return (
     <ThemeProvider theme={theme}>
       <Navbar
-        view={currentView}
-        toggleView={changeView}
+        view={currentUser}
+        toggleView={toggleView}
         openContent={openContent}
       ></Navbar>
       <Container
@@ -143,19 +143,21 @@ function TicketSystem() {
           marginTop: 4,
         }}
       >
-        {selected === "About" && <About />}
-        {selected === "Tickets" && <ViewAllTickets tickets={allTickets} />}
-        {selected === "New Ticket" && (
+        {selectedOption === "About" && <About />}
+        {selectedOption === "Tickets" && (
+          <ViewAllTickets tickets={allTickets} />
+        )}
+        {selectedOption === "New Ticket" && (
           <NewTicket
-            username={currentView ? "Admin" : "DefaultUser"}
+            username={currentUser}
             addTicket={addTicket}
             ticket={editingTicket ? editingTicket : false}
           />
         )}
-        {selected === "My Tickets" && (
+        {selectedOption === "My Tickets" && (
           <MyTickets
             tickets={myTickets}
-            username={currentView ? "Admin" : "DefaultUser"}
+            username={currentUser}
             editTicket={editTicket}
             deleteTicket={deleteTicket}
           />

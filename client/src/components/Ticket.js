@@ -22,7 +22,6 @@ function Ticket({ ticket, editTicket, deleteTicket }) {
         gap={2}
         width={250}
       >
-        <p>{ticket.id}</p>
         <TextField
           id="standard-basic"
           label="Title"
