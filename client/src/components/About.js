@@ -16,14 +16,12 @@ function About() {
         This site was built as a demo project for my portfolio. It demonstrates
         basic functionalities and looks of a Ticket System. It handles basic
         actions such as:
-        <ul>
-          <li>Create ticket</li>
-          <li>Read ticket</li>
-          <li>Update ticket</li>
-          <li>Delete ticket</li>
-          <li>Assign ticket</li>
-          <li>Finish ticket</li>
-        </ul>
+        <li className="aboutList">Create ticket</li>
+        <li className="aboutList">Read ticket</li>
+        <li className="aboutList">Update ticket</li>
+        <li className="aboutList">Delete ticket</li>
+        <li className="aboutList">Assign ticket</li>
+        <li className="aboutList">Finish ticket</li>
         By toggling between Admin View or Client View, you are able to see how
         it works from both sides. For example, the Client can only see its own
         tickets. <br />

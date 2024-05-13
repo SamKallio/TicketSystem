@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-function Ticket({ ticket, editTicket }) {
+function Ticket({ ticket, editTicket, deleteTicket }) {
   return (
     <>
       <Box
@@ -62,6 +62,13 @@ function Ticket({ ticket, editTicket }) {
           onClick={() => editTicket(ticket)}
         >
           Edit Ticket
+        </Button>
+        <Button
+          color="third"
+          variant="contained"
+          onClick={() => deleteTicket(ticket)}
+        >
+          Delete Ticket
         </Button>
       </Box>
     </>

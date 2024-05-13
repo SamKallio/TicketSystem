@@ -17,6 +17,14 @@ export const userSections = {
   ],
 };
 
+export const ticketState = {
+  ASSIGNED: "Assigned",
+  COMPLETED: "Completed",
+  UNDERWORK: "Underwork",
+  UNASSIGNED: "Unassigned",
+  PROTECTED: "Protected",
+};
+
 export function createEmptyTicket(user) {
   return {
     id: Date.now() + Math.floor(Math.random() * 1000),
@@ -25,7 +33,8 @@ export function createEmptyTicket(user) {
     title: "",
     category: "",
     description: "",
-    priority: "Normal",
+    priority: 0,
+    state: ticketState.UNASSIGNED,
   };
 }
 
@@ -39,6 +48,5 @@ function createDate(currentDate) {
   });
 
   const formattedDate = formatter.format(currentDate);
-
   return formattedDate;
 }

@@ -6,18 +6,19 @@ import NewTicket from "./NewTicket";
 import MyTickets from "./MyTickets";
 import Container from "@mui/material/Container";
 import About from "./About";
+import ViewAllTickets from "./ViewAllTickets";
 
 const theme = createTheme({
   palette: {
     primary: {
       main: "#1976d2", //Blue
-      highlight: "#2986d4", //Highlight
+      highlight: "#4298d9", //Highlight
     },
     secondary: {
       main: "#109612", //Green
     },
     third: {
-      main: "#dc004e", //Red
+      main: "#dc001e", //Red
     },
     background: {
       default: "#f4f4f4", // Default background color (White)
@@ -29,31 +30,53 @@ const theme = createTheme({
   },
 });
 
-const tickets = [
+const allTickets = [
   {
     id: 1,
-    date: "09/05/2024, 10:07",
+    date: "09/05/2024, 10:35",
     username: "Andy",
     title: "Test Ticket_1",
     category: "Billing",
-    description: "Here you can describe your reason for sending a ticket",
-    priority: "Normal",
+    description: "This ticket is marked as Protected and cannot be modified",
+    priority: 2,
+    state: "Protected",
   },
   {
     id: 2,
-    date: "09/05/2024, 11:07",
+    date: "09/05/2024, 11:01",
     username: "John",
-    title: "Test Ticket_2",
+    title: "Protected Ticket",
     category: "Technical issue",
-    description: "Here you can describe your reason for sending a ticket",
-    priority: "High",
+    description: "This ticket is marked as Protected and cannot be modified",
+    priority: 1,
+    state: "Protected",
+  },
+  {
+    id: 3,
+    date: "13/05/2024, 13:02",
+    username: "David",
+    title: "Protected Ticket",
+    category: "Account",
+    description: "This ticket is marked as Protected and cannot be modified",
+    priority: 0,
+    state: "Protected",
+  },
+  {
+    id: 3,
+    date: "13/05/2024, 15:37",
+    username: "DefaultUser",
+    title: "Protected Ticket",
+    category: "Account",
+    description: "This ticket is marked as Protected and cannot be modified",
+    priority: 0,
+    state: "Protected",
   },
 ];
 
 function TicketSystem() {
   const [currentView, setCurrentView] = useState(false);
   const [selected, setSelected] = useState("About");
-  const [myTickets, setMyTickets] = useState(tickets);
+  const [myTickets, setMyTickets] = useState(allTickets);
   const [editingTicket, setEditingTicket] = useState(0);
 
   const changeView = (v) => {
@@ -98,6 +121,15 @@ function TicketSystem() {
     }
   };
 
+  const deleteTicket = (ticket) => {
+    if (ticket) {
+      const updatedTickets = myTickets.filter(
+        (oldTicket) => oldTicket.id !== ticket.id
+      );
+      setMyTickets(updatedTickets);
+    }
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Navbar
@@ -112,9 +144,10 @@ function TicketSystem() {
         }}
       >
         {selected === "About" && <About />}
+        {selected === "Tickets" && <ViewAllTickets tickets={allTickets} />}
         {selected === "New Ticket" && (
           <NewTicket
-            username={currentView ? "Admin" : "User1234"}
+            username={currentView ? "Admin" : "DefaultUser"}
             addTicket={addTicket}
             ticket={editingTicket ? editingTicket : false}
           />
@@ -122,8 +155,9 @@ function TicketSystem() {
         {selected === "My Tickets" && (
           <MyTickets
             tickets={myTickets}
-            username={currentView ? "Admin" : "User1234"}
+            username={currentView ? "Admin" : "DefaultUser"}
             editTicket={editTicket}
+            deleteTicket={deleteTicket}
           />
         )}
         <footer id="footer">

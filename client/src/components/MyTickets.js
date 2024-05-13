@@ -2,7 +2,11 @@ import React from "react";
 import Ticket from "./Ticket";
 import Grid from "@mui/material/Unstable_Grid2";
 
-function MyTickets({ tickets, username, editTicket }) {
+function MyTickets({ tickets, username, editTicket, deleteTicket }) {
+  const currentTickets = tickets.filter(
+    (ticket) => ticket.username === username
+  );
+
   return (
     <>
       <h2 className="headers" style={{ textAlign: "center" }}>
@@ -15,13 +19,14 @@ function MyTickets({ tickets, username, editTicket }) {
         justifyContent="center"
         spacing={8}
       >
-        {tickets.length > 0 ? (
-          tickets.map((ticket, index) => (
+        {currentTickets.length > 0 ? (
+          currentTickets.map((ticket, index) => (
             <Grid xs={2.5} key={index}>
               <Ticket
                 ticket={ticket}
                 username={username}
                 editTicket={editTicket}
+                deleteTicket={deleteTicket}
               />
             </Grid>
           ))
