@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { ActionTypes } from "./TicketSystem";
+import { ticketState } from "../models/TicketModel";
 
 function Ticket({ ticket, dispatch }) {
   const [currentTicket, setCurrentTicket] = useState(ticket);
@@ -71,7 +72,10 @@ function Ticket({ ticket, dispatch }) {
           color="secondary"
           variant="contained"
           onClick={() =>
-            dispatch({ type: ActionTypes.EDIT_TICKET, payload: currentTicket })
+            dispatch({
+              type: ActionTypes.EDITING_TICKET,
+              payload: currentTicket,
+            })
           }
         >
           Edit Ticket
@@ -84,6 +88,9 @@ function Ticket({ ticket, dispatch }) {
               type: ActionTypes.DELETE_TICKET,
               payload: currentTicket,
             })
+          }
+          disabled={
+            currentTicket.state === ticketState.PROTECTED ? true : false
           }
         >
           Delete Ticket

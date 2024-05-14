@@ -55,24 +55,27 @@ const reducer = (state, action) => {
     case ActionTypes.GET_MY_TICKETS: //Add fetch here
       return state;
     case ActionTypes.ADD_TICKET:
+      const index = state.myTickets.findIndex(
+        (ticket) => ticket.id === action.payload.id
+      );
+
+      //If we find existing ticket, edit it instead
+      if (index !== -1) {
+        const updatedTickets = [...state.myTickets];
+        updatedTickets[index] = { ...updatedTickets[index], ...action.payload };
+
+        return {
+          ...state,
+          myTickets: updatedTickets,
+          selectedOption: "My Tickets",
+        };
+      }
+      //Else just add ticket
       return {
         ...state,
         myTickets: [...state.myTickets, action.payload],
         selectedOption: "My Tickets",
       };
-    case ActionTypes.EDIT_TICKET:
-      const index = state.myTickets.findIndex(
-        (ticket) => ticket.id === action.payload.id
-      );
-
-      if (index !== -1) {
-        const updatedTickets = [...state.myTickets];
-        updatedTickets[index] = { ...updatedTickets[index], ...action.payload };
-
-        return { ...state, myTickets: updatedTickets };
-      }
-
-      return state;
     case ActionTypes.DELETE_TICKET:
       const updatedTickets = state.myTickets.filter(
         (ticket) => ticket.id !== action.payload.id
@@ -95,9 +98,9 @@ const initState = {
       id: 1,
       date: "09/05/2024, 10:35",
       username: "Andy",
-      title: "Test Ticket_1",
+      title: "My credit card didn't work?",
       category: "Billing",
-      description: "This ticket is marked as Protected and cannot be modified",
+      description: "This ticket is marked as Protected and cannot be deleted",
       priority: 2,
       state: "Protected",
     },
@@ -105,9 +108,9 @@ const initState = {
       id: 2,
       date: "09/05/2024, 11:01",
       username: "John",
-      title: "Protected Ticket",
+      title: "My browser crashes whenever I try to log in",
       category: "Technical issue",
-      description: "This ticket is marked as Protected and cannot be modified",
+      description: "This ticket is marked as Protected and cannot be deleted",
       priority: 1,
       state: "Protected",
     },
@@ -115,9 +118,9 @@ const initState = {
       id: 3,
       date: "13/05/2024, 13:02",
       username: "David",
-      title: "Protected Ticket",
+      title: "Can I somehow change my accout name?",
       category: "Account",
-      description: "This ticket is marked as Protected and cannot be modified",
+      description: "This ticket is marked as Protected and cannot be deleted",
       priority: 0,
       state: "Protected",
     },
@@ -125,9 +128,9 @@ const initState = {
       id: 4,
       date: "13/05/2024, 15:37",
       username: "DefaultUser",
-      title: "Protected Ticket",
-      category: "Account",
-      description: "This ticket is marked as Protected and cannot be modified",
+      title: "Not sure where this belongs, but..",
+      category: "Other",
+      description: "This ticket is marked as Protected and cannot be deleted",
       priority: 0,
       state: "Protected",
     },

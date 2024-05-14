@@ -9,7 +9,11 @@ function MyTickets({ ticketData, dispatch }) {
         My Tickets
       </h2>
       <Grid
-        sx={{ flexGrow: 1, maxWidth: "100%" }}
+        sx={{
+          flexGrow: 1,
+          gap: 4,
+          margin: 4,
+        }}
         margin="auto"
         container
         justifyContent="center"
@@ -17,9 +21,7 @@ function MyTickets({ ticketData, dispatch }) {
       >
         {ticketData.length > 0 ? (
           ticketData.map((ticket, index) => (
-            <Grid xs={2.5} key={index}>
-              <Ticket ticket={ticket} dispatch={dispatch} />
-            </Grid>
+            <Ticket key={index} ticket={ticket} dispatch={dispatch} />
           ))
         ) : (
           <p>No tickets</p>

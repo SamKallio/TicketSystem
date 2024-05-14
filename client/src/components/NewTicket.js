@@ -14,13 +14,14 @@ import {
 import { ActionTypes } from "./TicketSystem";
 
 function NewTicket({ username, dispatch, ticket }) {
-  const [formData, setFormData] = useState(createEmptyTicket(username));
+  const [formData, setFormData] = useState(
+    ticket ? ticket : createEmptyTicket(username)
+  );
 
   useEffect(() => {
-    if (ticket) {
-      setFormData(ticket);
-    }
-  }, [ticket]);
+    if (ticket) setFormData(ticket);
+    else setFormData(createEmptyTicket(username));
+  }, [ticket, username]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -44,8 +45,10 @@ function NewTicket({ username, dispatch, ticket }) {
         "& .MuiTextField-root": { m: 1 },
         backgroundColor: "background.default",
         borderRadius: "8px",
-        marginTop: "50px",
+        margin: "auto",
+        marginTop: "100px",
         maxWidth: "100%",
+        padding: 2,
         boxShadow: 1,
         "&:hover": {
           bgcolor: "background.highlight",
@@ -53,7 +56,6 @@ function NewTicket({ username, dispatch, ticket }) {
       }}
       noValidate
       autoComplete="off"
-      margin="auto"
       display="flex"
       flexDirection="column"
       textAlign="center"
