@@ -12,8 +12,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import { userSections } from "../models/TicketModel";
+import { ActionTypes } from "./TicketSystem";
 
-export default function Options({ view, openContent }) {
+export default function Options({ view, dispatch }) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => {
@@ -33,7 +34,15 @@ export default function Options({ view, openContent }) {
             <Divider />
             {userSections.USER.map((text, index) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton onClick={openContent} data-value={text}>
+                <ListItemButton
+                  value={text}
+                  onClick={() =>
+                    dispatch({
+                      type: ActionTypes.SELECT_OPTION,
+                      payload: text,
+                    })
+                  }
+                >
                   <ListItemIcon>
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>
@@ -50,7 +59,15 @@ export default function Options({ view, openContent }) {
           <List>
             {userSections.ADMIN.map((text, index) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton onClick={openContent} data-value={text}>
+                <ListItemButton
+                  value={text}
+                  onClick={() =>
+                    dispatch({
+                      type: ActionTypes.SELECT_OPTION,
+                      payload: text,
+                    })
+                  }
+                >
                   <ListItemIcon>
                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                   </ListItemIcon>

@@ -1,9 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { ActionTypes } from "./TicketSystem";
 
-function Ticket({ ticket, editTicket, deleteTicket }) {
+function Ticket({ ticket, dispatch }) {
+  const [currentTicket, setCurrentTicket] = useState(ticket);
   return (
     <>
       <Box
@@ -29,7 +32,10 @@ function Ticket({ ticket, editTicket, deleteTicket }) {
           InputLabelProps={{
             style: { color: "black" },
           }}
-          value={ticket.title}
+          value={currentTicket.title}
+          onChange={(e) =>
+            setCurrentTicket({ ...currentTicket, title: e.target.value })
+          }
           disabled
         />
         <TextField
@@ -39,7 +45,10 @@ function Ticket({ ticket, editTicket, deleteTicket }) {
           InputLabelProps={{
             style: { color: "black" },
           }}
-          value={ticket.category}
+          value={currentTicket.category}
+          onChange={(e) =>
+            setCurrentTicket({ ...currentTicket, category: e.target.value })
+          }
           disabled
         />
         <TextField
@@ -50,22 +59,32 @@ function Ticket({ ticket, editTicket, deleteTicket }) {
           }}
           multiline
           maxRows={4}
-          value={ticket.description}
+          value={currentTicket.description}
+          onChange={(e) =>
+            setCurrentTicket({ ...currentTicket, description: e.target.value })
+          }
           disabled
         />
 
-        <p>Date: {ticket.date}</p>
+        <p>Date: {currentTicket.date}</p>
         <Button
           color="secondary"
           variant="contained"
-          onClick={() => editTicket(ticket)}
+          onClick={() =>
+            dispatch({ type: ActionTypes.EDIT_TICKET, payload: currentTicket })
+          }
         >
           Edit Ticket
         </Button>
         <Button
           color="third"
           variant="contained"
-          onClick={() => deleteTicket(ticket)}
+          onClick={() =>
+            dispatch({
+              type: ActionTypes.DELETE_TICKET,
+              payload: currentTicket,
+            })
+          }
         >
           Delete Ticket
         </Button>

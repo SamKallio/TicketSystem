@@ -11,18 +11,19 @@ import {
   categories,
   ticketRules,
 } from "../models/TicketModel";
+import { ActionTypes } from "./TicketSystem";
 
-function NewTicket({ username, addTicket, ticket }) {
+function NewTicket({ username, dispatch, ticket }) {
   const [formData, setFormData] = useState(createEmptyTicket(username));
 
   useEffect(() => {
-    if (ticket) setFormData(ticket);
-    else setFormData(createEmptyTicket(username));
-  }, [ticket, username]);
+    if (ticket) {
+      setFormData(ticket);
+    }
+  }, [ticket]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -32,7 +33,7 @@ function NewTicket({ username, addTicket, ticket }) {
     if (formData.title.length < ticketRules.minTitleLength) return;
     if (formData.description.length < ticketRules.minDescLength) return;
 
-    addTicket(formData);
+    dispatch({ type: ActionTypes.ADD_TICKET, payload: formData });
   };
 
   return (

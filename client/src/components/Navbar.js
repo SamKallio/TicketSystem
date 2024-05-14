@@ -5,13 +5,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Options from "./Options";
+import { ActionTypes } from "./TicketSystem";
 
-function Navbar({ view, toggleView, openContent }) {
+function Navbar({ view, dispatch }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Options view={view} openContent={openContent} />
+          <Options view={view} dispatch={dispatch} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Ticket System
           </Typography>
@@ -19,7 +20,12 @@ function Navbar({ view, toggleView, openContent }) {
             <Button
               variant="contained"
               color="secondary"
-              onClick={() => toggleView("Admin")}
+              onClick={() =>
+                dispatch({
+                  type: ActionTypes.SET_CURRENT_USER,
+                  payload: "Admin",
+                })
+              }
             >
               Client View
             </Button>
@@ -27,7 +33,12 @@ function Navbar({ view, toggleView, openContent }) {
             <Button
               variant="contained"
               color="third"
-              onClick={() => toggleView("DefaultUser")}
+              onClick={() =>
+                dispatch({
+                  type: ActionTypes.SET_CURRENT_USER,
+                  payload: "DefaultUser",
+                })
+              }
             >
               Admin View
             </Button>

@@ -3,6 +3,9 @@ import React from "react";
 function About() {
   return (
     <>
+      <h2 className="headers" style={{ textAlign: "center" }}>
+        About
+      </h2>
       <p
         style={{
           maxWidth: "800px",

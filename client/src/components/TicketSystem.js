@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useReducer } from "react";
 import Navbar from "./Navbar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import NewTicket from "./NewTicket";
@@ -30,142 +30,142 @@ const theme = createTheme({
   },
 });
 
-const allTickets = [
-  {
-    id: 1,
-    date: "09/05/2024, 10:35",
-    username: "Andy",
-    title: "Test Ticket_1",
-    category: "Billing",
-    description: "This ticket is marked as Protected and cannot be modified",
-    priority: 2,
-    state: "Protected",
-  },
-  {
-    id: 2,
-    date: "09/05/2024, 11:01",
-    username: "John",
-    title: "Protected Ticket",
-    category: "Technical issue",
-    description: "This ticket is marked as Protected and cannot be modified",
-    priority: 1,
-    state: "Protected",
-  },
-  {
-    id: 3,
-    date: "13/05/2024, 13:02",
-    username: "David",
-    title: "Protected Ticket",
-    category: "Account",
-    description: "This ticket is marked as Protected and cannot be modified",
-    priority: 0,
-    state: "Protected",
-  },
-  {
-    id: 3,
-    date: "13/05/2024, 15:37",
-    username: "DefaultUser",
-    title: "Protected Ticket",
-    category: "Account",
-    description: "This ticket is marked as Protected and cannot be modified",
-    priority: 0,
-    state: "Protected",
-  },
-];
+export const ActionTypes = {
+  SET_CURRENT_USER: "SET_CURRENT_USER",
+  SELECT_OPTION: "SELECT_OPTION",
+  EDITING_TICKET: "EDITING_TICKET",
+  GET_MY_TICKETS: "GET_MY_TICKETS",
+  ADD_TICKET: "ADD_TICKET",
+  DELETE_TICKET: "DELETE_TICKET",
+  EDIT_TICKET: "EDIT_TICKET",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ActionTypes.SET_CURRENT_USER:
+      return { ...state, currentUser: action.payload, selectedOption: "About" };
+    case ActionTypes.SELECT_OPTION:
+      return { ...state, selectedOption: action.payload, editingTicket: false };
+    case ActionTypes.EDITING_TICKET:
+      return {
+        ...state,
+        editingTicket: action.payload,
+        selectedOption: "New Ticket",
+      };
+    case ActionTypes.GET_MY_TICKETS: //Add fetch here
+      return state;
+    case ActionTypes.ADD_TICKET:
+      return {
+        ...state,
+        myTickets: [...state.myTickets, action.payload],
+        selectedOption: "My Tickets",
+      };
+    case ActionTypes.EDIT_TICKET:
+      const index = state.myTickets.findIndex(
+        (ticket) => ticket.id === action.payload.id
+      );
+
+      if (index !== -1) {
+        const updatedTickets = [...state.myTickets];
+        updatedTickets[index] = { ...updatedTickets[index], ...action.payload };
+
+        return { ...state, myTickets: updatedTickets };
+      }
+
+      return state;
+    case ActionTypes.DELETE_TICKET:
+      const updatedTickets = state.myTickets.filter(
+        (ticket) => ticket.id !== action.payload.id
+      );
+      return {
+        ...state,
+        myTickets: updatedTickets,
+      };
+    default:
+      return state;
+  }
+};
+
+const initState = {
+  currentUser: "DefaultUser",
+  selectedOption: "About",
+  editingTicket: false,
+  myTickets: [
+    {
+      id: 1,
+      date: "09/05/2024, 10:35",
+      username: "Andy",
+      title: "Test Ticket_1",
+      category: "Billing",
+      description: "This ticket is marked as Protected and cannot be modified",
+      priority: 2,
+      state: "Protected",
+    },
+    {
+      id: 2,
+      date: "09/05/2024, 11:01",
+      username: "John",
+      title: "Protected Ticket",
+      category: "Technical issue",
+      description: "This ticket is marked as Protected and cannot be modified",
+      priority: 1,
+      state: "Protected",
+    },
+    {
+      id: 3,
+      date: "13/05/2024, 13:02",
+      username: "David",
+      title: "Protected Ticket",
+      category: "Account",
+      description: "This ticket is marked as Protected and cannot be modified",
+      priority: 0,
+      state: "Protected",
+    },
+    {
+      id: 4,
+      date: "13/05/2024, 15:37",
+      username: "DefaultUser",
+      title: "Protected Ticket",
+      category: "Account",
+      description: "This ticket is marked as Protected and cannot be modified",
+      priority: 0,
+      state: "Protected",
+    },
+  ],
+};
 
 function TicketSystem() {
-  const [currentUser, setCurrentUser] = useState("DefaultUser");
-  const [selectedOption, setSelectedOption] = useState("About");
-  const [myTickets, setMyTickets] = useState(allTickets);
-  const [editingTicket, setEditingTicket] = useState(0);
-
-  const toggleView = (v) => {
-    setSelectedOption("");
-    setCurrentUser(v);
-  };
-
-  const openContent = (event) => {
-    const data = event.currentTarget.dataset.value;
-    setSelectedOption(data);
-    setEditingTicket(0);
-  };
-
-  const addTicket = (ticket) => {
-    if (ticket) {
-      setMyTickets((prevTickets) => {
-        let updated = false;
-        const newTickets = prevTickets.map((prevTicket) => {
-          if (prevTicket.id === ticket.id) {
-            updated = true;
-            return { ...prevTicket, ...ticket };
-          } else {
-            return prevTicket;
-          }
-        });
-
-        if (!updated) {
-          newTickets.push(ticket);
-        }
-
-        return newTickets;
-      });
-
-      setSelectedOption("My Tickets");
-    }
-  };
-
-  const editTicket = (ticket) => {
-    if (ticket) {
-      setEditingTicket(ticket);
-      setSelectedOption("New Ticket");
-    }
-  };
-
-  const deleteTicket = (ticket) => {
-    if (ticket) {
-      const updatedTickets = myTickets.filter(
-        (oldTicket) => oldTicket.id !== ticket.id
-      );
-      setMyTickets(updatedTickets);
-    }
-  };
+  const [systemState, dispatch] = useReducer(reducer, initState);
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar
-        view={currentUser}
-        toggleView={toggleView}
-        openContent={openContent}
-      ></Navbar>
+      <Navbar view={systemState.currentUser} dispatch={dispatch}></Navbar>
       <Container
         maxWidth="fullWidth"
         sx={{
           marginTop: 4,
         }}
       >
-        {selectedOption === "About" && <About />}
-        {selectedOption === "Tickets" && (
-          <ViewAllTickets tickets={allTickets} />
+        {systemState.selectedOption === "About" && <About />}
+        {systemState.selectedOption === "Tickets" && (
+          <ViewAllTickets tickets={systemState.myTickets} />
         )}
-        {selectedOption === "New Ticket" && (
+        {systemState.selectedOption === "New Ticket" && (
           <NewTicket
-            username={currentUser}
-            addTicket={addTicket}
-            ticket={editingTicket ? editingTicket : false}
+            username={systemState.currentUser}
+            dispatch={dispatch}
+            ticket={
+              systemState.editingTicket ? systemState.editingTicket : false
+            }
           />
         )}
-        {selectedOption === "My Tickets" && (
-          <MyTickets
-            tickets={myTickets}
-            username={currentUser}
-            editTicket={editTicket}
-            deleteTicket={deleteTicket}
-          />
+        {systemState.selectedOption === "My Tickets" && (
+          <MyTickets ticketData={systemState.myTickets} dispatch={dispatch} />
         )}
         <footer id="footer">
           © Samuli Kalliomäki
           <br />
-          Made with React and Material UI
+          Made with React, Material UI and ExpressJS
         </footer>
       </Container>
     </ThemeProvider>

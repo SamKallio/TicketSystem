@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
@@ -6,13 +7,16 @@ import { categories } from "../models/TicketModel";
 import TicketTable from "./TicketTable";
 
 function ViewAllTickets({ tickets }) {
-  const [category, setCategory] = React.useState(categories[0]);
-  const currentTickets = tickets.filter(
-    (ticket) => ticket.category === category
+  const [currentCategory, setCurrentCategory] = useState(categories[0]);
+  const [currentTickets, setCurrentTickets] = useState(
+    tickets.filter((ticket) => ticket.category === currentCategory)
   );
 
-  const handleChange = (event, newCategory) => {
-    setCategory(newCategory);
+  const changeCategory = (event, newCategory) => {
+    setCurrentCategory(newCategory);
+    setCurrentTickets(
+      tickets.filter((ticket) => ticket.category === newCategory)
+    );
   };
 
   return (
@@ -30,8 +34,8 @@ function ViewAllTickets({ tickets }) {
             display: "flex",
             justifyContent: "center",
           }}
-          value={category}
-          onChange={handleChange}
+          value={currentCategory}
+          onChange={changeCategory}
           variant="scrollable"
           scrollButtons
           allowScrollButtonsMobile
