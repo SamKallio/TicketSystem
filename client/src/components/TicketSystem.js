@@ -103,6 +103,7 @@ const initState = {
       description: "This ticket is marked as Protected and cannot be deleted",
       priority: 2,
       state: "Protected",
+      assigned: "",
     },
     {
       id: 2,
@@ -113,6 +114,7 @@ const initState = {
       description: "This ticket is marked as Protected and cannot be deleted",
       priority: 1,
       state: "Protected",
+      assigned: "",
     },
     {
       id: 3,
@@ -123,6 +125,7 @@ const initState = {
       description: "This ticket is marked as Protected and cannot be deleted",
       priority: 0,
       state: "Protected",
+      assigned: "",
     },
     {
       id: 4,
@@ -133,6 +136,7 @@ const initState = {
       description: "This ticket is marked as Protected and cannot be deleted",
       priority: 0,
       state: "Protected",
+      assigned: "",
     },
   ],
 };
@@ -151,7 +155,7 @@ function TicketSystem() {
       >
         {systemState.selectedOption === "About" && <About />}
         {systemState.selectedOption === "Tickets" && (
-          <ViewAllTickets tickets={systemState.myTickets} />
+          <ViewAllTickets tickets={systemState.myTickets} dispatch={dispatch} />
         )}
         {systemState.selectedOption === "New Ticket" && (
           <NewTicket

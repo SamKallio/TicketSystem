@@ -35,6 +35,7 @@ export function createEmptyTicket(user) {
     description: "",
     priority: 0,
     state: ticketState.UNASSIGNED,
+    assigned: "",
   };
 }
 
