@@ -4,11 +4,10 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { categories } from "../models/TicketModel";
 import TicketTable from "./TicketTable";
 import ViewTicket from "./ViewTicket";
 import { ActionTypes } from "./TicketSystem";
-import { ticketState } from "../models/TicketModel";
+import { ticketState, categories } from "../models/TicketModel";
 
 const btnStyle = {
   margin: "4px",
@@ -26,7 +25,7 @@ const btnStyle = {
   },
 };
 
-function ViewAllTickets({ tickets, dispatch }) {
+function ViewAllTickets({ tickets, dispatch, username }) {
   const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
@@ -70,6 +69,8 @@ function ViewAllTickets({ tickets, dispatch }) {
           open={openModal}
           setModal={setOpenModal}
           ticket={selected}
+          dispatch={dispatch}
+          username={username}
         />
       )}
       <Box
@@ -105,17 +106,8 @@ function ViewAllTickets({ tickets, dispatch }) {
       />
       {selected ? (
         <Box mt={2}>
-          <Button
-            onClick={() => setOpenModal(true)}
-            sx={{ ...btnStyle, backgroundColor: "secondary.main" }}
-          >
-            Reply
-          </Button>
           <Button onClick={() => setOpenModal(true)} sx={btnStyle}>
-            Assign
-          </Button>
-          <Button onClick={() => setOpenModal(true)} sx={btnStyle}>
-            View
+            Open Ticket
           </Button>
           <Button
             onClick={() => deleteTicket()}

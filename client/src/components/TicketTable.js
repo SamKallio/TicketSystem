@@ -1,5 +1,6 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
+
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "username", headerName: "Username", width: 130, sortable: false },
@@ -25,7 +26,12 @@ const columns = [
   {
     field: "assigned",
     headerName: "Assigned",
-    width: 100,
+    width: 120,
+  },
+  {
+    field: "priority",
+    headerName: "Priority",
+    width: 120,
   },
 ];
 
@@ -44,7 +50,6 @@ export default function TicketTable({ rows, setSelected, showButton }) {
             },
           }}
           pageSizeOptions={[5, 10]}
-          checkboxSelection
           onCellClick={showButton}
           onColumnHeaderClick={() => setSelected(null)}
         />

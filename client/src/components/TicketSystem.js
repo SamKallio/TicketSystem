@@ -7,6 +7,7 @@ import MyTickets from "./MyTickets";
 import Container from "@mui/material/Container";
 import About from "./About";
 import ViewAllTickets from "./ViewAllTickets";
+import { ticketPriority } from "../models/TicketModel";
 
 const theme = createTheme({
   palette: {
@@ -22,6 +23,7 @@ const theme = createTheme({
     },
     background: {
       default: "#f4f4f4", // Default background color (White)
+      darker: "#f1f1f1", // Darker
       highlight: "#f8f8f8",
     },
     text: {
@@ -38,6 +40,7 @@ export const ActionTypes = {
   ADD_TICKET: "ADD_TICKET",
   DELETE_TICKET: "DELETE_TICKET",
   EDIT_TICKET: "EDIT_TICKET",
+  SEND_COMMENT: "SEND_COMMENT",
 };
 
 const reducer = (state, action) => {
@@ -84,6 +87,33 @@ const reducer = (state, action) => {
         ...state,
         myTickets: updatedTickets,
       };
+    case ActionTypes.SEND_COMMENT:
+      const ix = state.myTickets.findIndex(
+        (ticket) => ticket.id === action.payload.id
+      );
+
+      //If we find existing ticket, edit it
+      if (ix !== -1) {
+        const updatedTickets = [...state.myTickets];
+        const existingTicket = updatedTickets[ix];
+
+        const updatedComments = [...existingTicket.comments];
+
+        // Add new comment
+        updatedComments.push(action.payload.comment);
+
+        updatedTickets[ix] = {
+          ...existingTicket,
+          ...action.payload,
+          comments: updatedComments,
+        };
+
+        return {
+          ...state,
+          myTickets: updatedTickets,
+        };
+      }
+      break;
     default:
       return state;
   }
@@ -101,9 +131,17 @@ const initState = {
       title: "My credit card didn't work?",
       category: "Billing",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: 2,
+      priority: ticketPriority.MEDIUM,
       state: "Protected",
       assigned: "",
+      comments: [
+        {
+          id: 1,
+          content: "I forgot to mention that I have Visa Electron",
+          username: "Andy",
+          date: "12/05/2024, 11:42",
+        },
+      ],
     },
     {
       id: 2,
@@ -112,20 +150,37 @@ const initState = {
       title: "My browser crashes whenever I try to log in",
       category: "Technical issue",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: 1,
+      priority: ticketPriority.LOW,
       state: "Protected",
       assigned: "",
+      comments: [
+        {
+          id: 1,
+          content: "Any ideas??",
+          username: "John",
+          date: "11/05/2024, 16:42",
+        },
+      ],
     },
     {
       id: 3,
       date: "13/05/2024, 13:02",
       username: "David",
-      title: "Can I somehow change my accout name?",
+      title: "Can I somehow change my account name?",
       category: "Account",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: 0,
+      priority: ticketPriority.VERYLOW,
       state: "Protected",
       assigned: "",
+      comments: [
+        {
+          id: 1,
+          content:
+            "Sorry for being pesky, but how long does this process take?",
+          username: "David",
+          date: "15/05/2024, 18:28",
+        },
+      ],
     },
     {
       id: 4,
@@ -134,9 +189,23 @@ const initState = {
       title: "Not sure where this belongs, but..",
       category: "Other",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: 0,
+      priority: ticketPriority.VERYLOW,
       state: "Protected",
       assigned: "",
+      comments: [],
+    },
+    {
+      id: 6,
+      date: "16/05/2024, 17:37",
+      username: "Admin",
+      title: "Internal Ticket Example",
+      category: "Technical issue",
+      description:
+        "Hey our computer is not working properly in sales department. Could you come to take look at it? I think it is the HDMI cable or something to that related.",
+      priority: ticketPriority.HIGH,
+      state: "Protected",
+      assigned: "",
+      comments: [],
     },
   ],
 };
@@ -155,7 +224,11 @@ function TicketSystem() {
       >
         {systemState.selectedOption === "About" && <About />}
         {systemState.selectedOption === "Tickets" && (
-          <ViewAllTickets tickets={systemState.myTickets} dispatch={dispatch} />
+          <ViewAllTickets
+            tickets={systemState.myTickets}
+            dispatch={dispatch}
+            username={systemState.currentUser}
+          />
         )}
         {systemState.selectedOption === "New Ticket" && (
           <NewTicket
@@ -167,12 +240,17 @@ function TicketSystem() {
           />
         )}
         {systemState.selectedOption === "My Tickets" && (
-          <MyTickets ticketData={systemState.myTickets} dispatch={dispatch} />
+          <MyTickets
+            ticketData={systemState.myTickets.filter(
+              (ticket) => ticket.username === systemState.currentUser
+            )}
+            dispatch={dispatch}
+          />
         )}
         <footer id="footer">
           © Samuli Kalliomäki
           <br />
-          Made with React, Material UI and ExpressJS
+          Made with React and Material UI
         </footer>
       </Container>
     </ThemeProvider>

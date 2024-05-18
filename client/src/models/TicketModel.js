@@ -3,6 +3,13 @@ export const ticketRules = {
   minDescLength: 20,
 };
 
+export const ticketPriority = {
+  HIGH: 3,
+  MEDIUM: 2,
+  LOW: 1,
+  VERYLOW: 0,
+};
+
 export const categories = ["Account", "Technical issue", "Billing", "Other"];
 
 export const userSections = {
@@ -36,6 +43,16 @@ export function createEmptyTicket(user) {
     priority: 0,
     state: ticketState.UNASSIGNED,
     assigned: "",
+    comments: [],
+  };
+}
+
+export function createNewComment(user, message) {
+  return {
+    id: Date.now() + Math.floor(Math.random() * 1000),
+    username: user,
+    content: message,
+    date: createDate(new Date()),
   };
 }
 

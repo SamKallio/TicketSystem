@@ -26,18 +26,15 @@ function About() {
         <li className="aboutList">Assign ticket</li>
         <li className="aboutList">Close ticket</li>
         <li className="aboutList">Comment ticket</li>
-        By toggling between <b>Admin View </b>or <b>Client View</b>, you are
-        able to see how it works from both sides. For example, the Client can
-        only see its own tickets. <br />
-        In Admin View, the Tickets are initially unassigned and unprioritized,
-        but once a ticket is assigned and prioritized, it will move to a
-        matching category in order of priority and time of arrival. There is no
-        actual user validation or authenication system in the backend, so any
-        assigned tickets go to imaginary users.
+        Currently it does not have backend to store data, so any changes are
+        gone if you refresh your browser. By toggling between <b>Admin View </b>
+        or <b>Client View</b>, you are able to see how it works for both sides.
+        For example, the Client can only see it's own tickets and Admin can
+        access all tickets and do actions on them.
         <br />
         <br />
-        Some tickets are marked as "protected" on purpose for demonstration and
-        testing.
+        Some tickets are marked as <b>"Protected"</b> on purpose for
+        demonstration purposes.
       </p>
     </>
   );
