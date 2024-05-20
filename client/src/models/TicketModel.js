@@ -9,14 +9,7 @@ export const categories = ["Account", "Technical issue", "Billing", "Other"];
 
 export const userSections = {
   USER: ["New Ticket", "My Tickets", "Help", "About"],
-  ADMIN: [
-    "New Ticket",
-    "My Tickets",
-    "Tickets",
-    "Assigned",
-    "Finished",
-    "About",
-  ],
+  ADMIN: ["New Ticket", "My Tickets", "Tickets", "Assigned", "About"],
 };
 
 export const ticketState = [

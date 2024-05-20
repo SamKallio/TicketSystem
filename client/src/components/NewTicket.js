@@ -47,9 +47,10 @@ function NewTicket({ username, dispatch, ticket }) {
         backgroundColor: "background.default",
         borderRadius: "8px",
         margin: "auto",
-        marginTop: "100px",
+        marginTop: "50px",
         maxWidth: "100%",
         padding: 2,
+        paddingTop: 6,
         boxShadow: 1,
         "&:hover": {
           bgcolor: "background.highlight",
@@ -65,11 +66,6 @@ function NewTicket({ username, dispatch, ticket }) {
       p={4}
       width={400}
     >
-      {ticket ? (
-        <h2 className="headers">Edit Ticket</h2>
-      ) : (
-        <h2 className="headers">New Ticket</h2>
-      )}
       <TextField
         required
         id="outlined-helperText"

@@ -5,9 +5,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 function MyTickets({ ticketData, dispatch, username }) {
   return (
     <>
-      <h2 className="headers" style={{ textAlign: "center" }}>
-        My Tickets
-      </h2>
       <Grid
         sx={{
           flexGrow: 1,

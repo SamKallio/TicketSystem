@@ -9,14 +9,6 @@ body {
   text-align: center;
 }
 
-.headers {
-  text-shadow: 1px 1px 2px #26262680;
-  margin: 0px;
-  padding: 0px;
-  letter-spacing: 2px;
-  font-size: 26px;
-}
-
 .errorText {
   color: red;
   margin: 0;

@@ -1,18 +1,15 @@
+import { Typography } from "@mui/material";
 import React from "react";
 
 function About() {
   return (
     <>
-      <h2 className="headers" style={{ textAlign: "center" }}>
-        About
-      </h2>
-      <p
-        style={{
+      <Typography
+        sx={{
           maxWidth: "800px",
-          marginTop: "50px",
-          marginBottom: "50px",
+          mb: 5,
           margin: "auto",
-          padding: "12px",
+          padding: 2,
           fontSize: "18px",
         }}
       >
@@ -27,15 +24,16 @@ function About() {
         <li className="aboutList">Close ticket</li>
         <li className="aboutList">Comment ticket</li>
         Currently it does not have backend to store data, so any changes are
-        gone if you refresh your browser. By toggling between <b>Admin View </b>
-        or <b>Client View</b>, you are able to see how it works for both sides.
-        For example, the Client can only see it's own tickets and Admin can
-        access all tickets and do actions on them.
+        gone if you refresh the browser. <br />
+        Toggle between <b>Admin View </b>
+        or <b>Client View</b> in order to see how it works for both sides. For
+        example, the Client can only see it's own tickets and Admin can access
+        all tickets and do actions on them.
         <br />
         <br />
-        Some tickets are marked as <b>"Protected"</b> on purpose for
-        demonstration purposes.
-      </p>
+        Some tickets are marked as <b>"Protected"</b> for demonstration
+        purposes.
+      </Typography>
     </>
   );
 }

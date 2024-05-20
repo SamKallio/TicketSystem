@@ -1,13 +1,14 @@
 import React from "react";
 import { useReducer } from "react";
-import Navbar from "./Navbar";
 import { ThemeProvider } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { theme } from "../models/StyleModel";
+import Navbar from "./Navbar";
+import About from "./About";
 import NewTicket from "./NewTicket";
 import MyTickets from "./MyTickets";
-import Container from "@mui/material/Container";
-import About from "./About";
 import ViewAllTickets from "./ViewAllTickets";
-import { theme } from "../models/StyleModel";
 
 export const ActionTypes = {
   SET_CURRENT_USER: "SET_CURRENT_USER",
@@ -140,7 +141,7 @@ const initState = {
       description: "This ticket is marked as Protected and cannot be deleted",
       priority: 3,
       state: "Protected",
-      assigned: "-",
+      assigned: "Admin",
       comments: [
         {
           id: 1,
@@ -229,6 +230,9 @@ function TicketSystem() {
           marginTop: 4,
         }}
       >
+        <Typography sx={{ textAlign: "center" }} variant="h5">
+          {systemState.selectedOption}
+        </Typography>
         {systemState.selectedOption === "About" && <About />}
         {systemState.selectedOption === "Tickets" && (
           <ViewAllTickets
@@ -255,6 +259,16 @@ function TicketSystem() {
             username={systemState.currentUser}
           />
         )}
+        {systemState.selectedOption === "Assigned" && (
+          <ViewAllTickets
+            tickets={systemState.myTickets.filter(
+              (ticket) => ticket.assigned === systemState.currentUser
+            )}
+            dispatch={dispatch}
+            username={systemState.currentUser}
+          />
+        )}
+
         <footer id="footer">
           © Samuli Kalliomäki
           <br />

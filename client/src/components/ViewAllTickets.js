@@ -74,11 +74,7 @@ function ViewAllTickets({ tickets, dispatch, username }) {
           ))}
         </Tabs>
       </Box>
-      <TicketTable
-        rows={currentTickets}
-        selected={selected}
-        showButton={showButton}
-      />
+      <TicketTable rows={currentTickets} showButton={showButton} />
       {selected ? (
         <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
           {selected && (
