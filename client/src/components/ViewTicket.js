@@ -3,46 +3,19 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Comment from "./Comment";
-import Button from "@mui/material/Button";
 import Reply from "./Reply";
 import { ActionTypes } from "./TicketSystem";
 import { createNewComment } from "../models/TicketModel";
 import { useState } from "react";
+import AssignMenu from "./AssignMenu";
+import StateMenu from "./StateMenu";
+import { modalStyle } from "../models/StyleModel";
+import { btnStyle } from "../models/StyleModel";
+import Button from "@mui/material/Button";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 360,
-  bgcolor: "background.paper",
-  border: "1px solid #000",
-  borderRadius: 1,
-  overflow: "scroll",
-  height: "80%",
-  boxShadow: 24,
-  p: 4,
-};
-
-const btnStyle = {
-  mt: 2,
-  ml: 1,
-  color: "white",
-  borderRadius: "4px",
-  boxShadow: 1,
-  backgroundColor: "secondary.main",
-  "&:hover": {
-    bgcolor: "background.highlight",
-    color: "black",
-  },
-  "&.Mui-selected": {
-    bgcolor: "background.highlight",
-    color: "black",
-  },
-};
-
-function ViewTicket({ open, setModal, ticket, dispatch, username }) {
+function ViewTicket({ ticket, dispatch, username }) {
   const [currentComments, setCurrentComments] = useState(ticket.comments);
+  const [open, setModal] = useState(false);
 
   const sendComment = (message) => {
     const newComment = createNewComment(username, message);
@@ -59,6 +32,9 @@ function ViewTicket({ open, setModal, ticket, dispatch, username }) {
 
   return (
     <>
+      <Button onClick={() => setModal(true)} sx={btnStyle}>
+        Open Ticket
+      </Button>
       <Modal
         keepMounted
         open={open}
@@ -66,7 +42,7 @@ function ViewTicket({ open, setModal, ticket, dispatch, username }) {
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Typography id="keep-mounted-modal-title" variant="h7" component="h2">
             {ticket.title}
           </Typography>
@@ -108,12 +84,20 @@ function ViewTicket({ open, setModal, ticket, dispatch, username }) {
               <i>No comments</i>
             </p>
           )}
-          <Button sx={{ ...btnStyle, backgroundColor: "primary.main" }}>
-            Assign
-          </Button>
-          <Button sx={{ ...btnStyle, backgroundColor: "secondary.main" }}>
-            Set State
-          </Button>
+          {username === "Admin" && (
+            <Box sx={{ display: "flex", gap: 1, mt: 4, width: "100%" }}>
+              <AssignMenu
+                dispatch={dispatch}
+                ticketId={ticket.id}
+                assignedUser={ticket.assigned}
+              />
+              <StateMenu
+                dispatch={dispatch}
+                ticketId={ticket.id}
+                currentState={ticket.state}
+              />
+            </Box>
+          )}
           <Reply sendComment={sendComment} />
         </Box>
       </Modal>

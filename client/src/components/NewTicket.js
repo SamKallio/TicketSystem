@@ -12,6 +12,7 @@ import {
   ticketRules,
 } from "../models/TicketModel";
 import { ActionTypes } from "./TicketSystem";
+import { btnStyle } from "../models/StyleModel";
 
 function NewTicket({ username, dispatch, ticket }) {
   const [formData, setFormData] = useState(
@@ -142,12 +143,7 @@ function NewTicket({ username, dispatch, ticket }) {
           Submit
         </Button>
       ) : (
-        <Button
-          variant="contained"
-          endIcon={<SendIcon />}
-          type="submit"
-          disabled
-        >
+        <Button sx={{ btnStyle }} endIcon={<SendIcon />} type="submit" disabled>
           Submit
         </Button>
       )}

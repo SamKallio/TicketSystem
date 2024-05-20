@@ -28,3 +28,7 @@ body {
   margin-top: 8px;
   margin-bottom: 8px;
 }
+
+.whiteText {
+  color: "white";
+}

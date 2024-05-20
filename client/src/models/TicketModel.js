@@ -3,12 +3,7 @@ export const ticketRules = {
   minDescLength: 20,
 };
 
-export const ticketPriority = {
-  HIGH: 3,
-  MEDIUM: 2,
-  LOW: 1,
-  VERYLOW: 0,
-};
+export const priorityOptions = ["Very Low", "Low", "Medium", "High"];
 
 export const categories = ["Account", "Technical issue", "Billing", "Other"];
 
@@ -24,13 +19,13 @@ export const userSections = {
   ],
 };
 
-export const ticketState = {
-  ASSIGNED: "Assigned",
-  COMPLETED: "Completed",
-  UNDERWORK: "Underwork",
-  UNASSIGNED: "Unassigned",
-  PROTECTED: "Protected",
-};
+export const ticketState = [
+  "Unassigned",
+  "Assigned",
+  "Underwork",
+  "Completed",
+  "Protected",
+];
 
 export function createEmptyTicket(user) {
   return {
@@ -42,7 +37,7 @@ export function createEmptyTicket(user) {
     description: "",
     priority: 0,
     state: ticketState.UNASSIGNED,
-    assigned: "",
+    assigned: "-",
     comments: [],
   };
 }

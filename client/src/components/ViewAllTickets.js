@@ -8,32 +8,21 @@ import TicketTable from "./TicketTable";
 import ViewTicket from "./ViewTicket";
 import { ActionTypes } from "./TicketSystem";
 import { ticketState, categories } from "../models/TicketModel";
-
-const btnStyle = {
-  margin: "4px",
-  color: "white",
-  borderRadius: "4px",
-  boxShadow: 1,
-  backgroundColor: "primary.highlight",
-  "&:hover": {
-    bgcolor: "background.highlight",
-    color: "black",
-  },
-  "&.Mui-selected": {
-    bgcolor: "background.highlight",
-    color: "black",
-  },
-};
+import { btnStyle } from "../models/StyleModel";
 
 function ViewAllTickets({ tickets, dispatch, username }) {
-  const [openModal, setOpenModal] = useState(false);
   const [selected, setSelected] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
-  const [currentTickets, setCurrentTickets] = useState(
-    tickets.filter((ticket) => ticket.category === currentCategory)
+
+  const currentTickets = tickets.filter(
+    (ticket) => ticket.category === currentCategory
   );
 
   const showButton = (params) => {
+    if (!params) {
+      setSelected(null);
+      return;
+    }
     if (params.value === true) setSelected(null);
     else
       setSelected((prevSelected) =>
@@ -43,36 +32,18 @@ function ViewAllTickets({ tickets, dispatch, username }) {
 
   const changeCategory = (event, newCategory) => {
     setCurrentCategory(newCategory);
-    setCurrentTickets(
-      tickets.filter((ticket) => ticket.category === newCategory)
-    );
     setSelected(null);
   };
 
   const deleteTicket = () => {
     if (selected && selected.state !== ticketState.PROTECTED) {
       dispatch({ type: ActionTypes.DELETE_TICKET, payload: selected });
-      setCurrentTickets(
-        tickets.filter(
-          (ticket) =>
-            ticket.category === currentCategory && ticket.id !== selected.id
-        )
-      );
       setSelected(null);
     }
   };
 
   return (
     <>
-      {selected && (
-        <ViewTicket
-          open={openModal}
-          setModal={setOpenModal}
-          ticket={selected}
-          dispatch={dispatch}
-          username={username}
-        />
-      )}
       <Box
         sx={{
           margin: "auto",
@@ -94,37 +65,40 @@ function ViewAllTickets({ tickets, dispatch, username }) {
           aria-label="scrollable force tabs example"
         >
           {categories.map((v, index) => (
-            <Tab sx={btnStyle} value={v} label={v} key={index} />
+            <Tab
+              sx={{ ...btnStyle, backgroundColor: "primary.highlight", ml: 1 }}
+              value={v}
+              label={v}
+              key={index}
+            />
           ))}
         </Tabs>
       </Box>
       <TicketTable
         rows={currentTickets}
         selected={selected}
-        setSelected={setSelected}
         showButton={showButton}
       />
       {selected ? (
-        <Box mt={2}>
-          <Button onClick={() => setOpenModal(true)} sx={btnStyle}>
-            Open Ticket
-          </Button>
-          <Button
-            onClick={() => deleteTicket()}
-            sx={{
-              ...btnStyle,
-              backgroundColor:
-                selected.state === ticketState.PROTECTED
-                  ? "grey"
-                  : "third.main",
-            }}
-            disabled={selected.state === ticketState.PROTECTED}
-          >
-            Delete
-          </Button>
+        <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
+          {selected && (
+            <ViewTicket
+              ticket={selected}
+              dispatch={dispatch}
+              username={username}
+            />
+          )}
+          {selected.state === ticketState.PROTECTED && (
+            <Button
+              onClick={() => deleteTicket()}
+              sx={{ ...btnStyle, bgcolor: "third.main" }}
+            >
+              Delete
+            </Button>
+          )}
         </Box>
       ) : (
-        <p></p>
+        <></>
       )}
     </>
   );

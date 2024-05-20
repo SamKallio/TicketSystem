@@ -2,7 +2,7 @@ import React from "react";
 import Ticket from "./Ticket";
 import Grid from "@mui/material/Unstable_Grid2";
 
-function MyTickets({ ticketData, dispatch }) {
+function MyTickets({ ticketData, dispatch, username }) {
   return (
     <>
       <h2 className="headers" style={{ textAlign: "center" }}>
@@ -21,7 +21,12 @@ function MyTickets({ ticketData, dispatch }) {
       >
         {ticketData.length > 0 ? (
           ticketData.map((ticket, index) => (
-            <Ticket key={index} ticket={ticket} dispatch={dispatch} />
+            <Ticket
+              key={index}
+              ticket={ticket}
+              dispatch={dispatch}
+              username={username}
+            />
           ))
         ) : (
           <p>No tickets</p>

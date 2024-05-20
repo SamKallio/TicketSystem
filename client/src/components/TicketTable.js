@@ -1,10 +1,11 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { priorityOptions } from "../models/TicketModel";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
   { field: "username", headerName: "Username", width: 130, sortable: false },
-  { field: "title", headerName: "Title", width: 130 },
+  { field: "title", sortable: false, headerName: "Title", width: 130 },
   { field: "category", headerName: "Category", width: 130 },
   {
     field: "date",
@@ -32,10 +33,15 @@ const columns = [
     field: "priority",
     headerName: "Priority",
     width: 120,
+    renderCell: (params) => {
+      return <>{priorityOptions[params.value]}</>;
+    },
+    // Customize sorting to use numeric values
+    sortComparator: (v1, v2) => v1 - v2,
   },
 ];
 
-export default function TicketTable({ rows, setSelected, showButton }) {
+export default function TicketTable({ rows, showButton }) {
   const arrayRows = Array.isArray(rows) ? rows : [rows];
 
   return (
@@ -51,7 +57,7 @@ export default function TicketTable({ rows, setSelected, showButton }) {
           }}
           pageSizeOptions={[5, 10]}
           onCellClick={showButton}
-          onColumnHeaderClick={() => setSelected(null)}
+          onColumnHeaderClick={() => showButton(null)}
         />
       )}
     </div>

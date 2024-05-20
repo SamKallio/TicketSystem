@@ -5,8 +5,10 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { ActionTypes } from "./TicketSystem";
 import { ticketState } from "../models/TicketModel";
+import ViewTicket from "./ViewTicket";
+import { btnStyle } from "../models/StyleModel";
 
-function Ticket({ ticket, dispatch }) {
+function Ticket({ ticket, dispatch, username }) {
   const [currentTicket, setCurrentTicket] = useState(ticket);
   return (
     <>
@@ -68,33 +70,44 @@ function Ticket({ ticket, dispatch }) {
         />
 
         <p>Date: {currentTicket.date}</p>
-        <Button
-          color="secondary"
-          variant="contained"
-          onClick={() =>
-            dispatch({
-              type: ActionTypes.EDITING_TICKET,
-              payload: currentTicket,
-            })
-          }
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
+            ml: 1,
+          }}
         >
-          Edit Ticket
-        </Button>
-        <Button
-          color="third"
-          variant="contained"
-          onClick={() =>
-            dispatch({
-              type: ActionTypes.DELETE_TICKET,
-              payload: currentTicket,
-            })
-          }
-          disabled={
-            currentTicket.state === ticketState.PROTECTED ? true : false
-          }
-        >
-          Delete Ticket
-        </Button>
+          <ViewTicket
+            ticket={currentTicket}
+            dispatch={dispatch}
+            username={username}
+          />
+          <Button
+            sx={{ ...btnStyle, backgroundColor: "primary.main" }}
+            onClick={() =>
+              dispatch({
+                type: ActionTypes.EDITING_TICKET,
+                payload: currentTicket,
+              })
+            }
+          >
+            Edit Ticket
+          </Button>
+          {currentTicket.state === ticketState.PROTECTED && (
+            <Button
+              sx={{ ...btnStyle, backgroundColor: "third.main" }}
+              onClick={() =>
+                dispatch({
+                  type: ActionTypes.DELETE_TICKET,
+                  payload: currentTicket,
+                })
+              }
+            >
+              Delete Ticket
+            </Button>
+          )}
+        </Box>
       </Box>
     </>
   );

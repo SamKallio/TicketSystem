@@ -1,36 +1,13 @@
 import React from "react";
 import { useReducer } from "react";
 import Navbar from "./Navbar";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import NewTicket from "./NewTicket";
 import MyTickets from "./MyTickets";
 import Container from "@mui/material/Container";
 import About from "./About";
 import ViewAllTickets from "./ViewAllTickets";
-import { ticketPriority } from "../models/TicketModel";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#1976d2", //Blue
-      highlight: "#4298d9", //Highlight
-    },
-    secondary: {
-      main: "#109612", //Green
-    },
-    third: {
-      main: "#dc001e", //Red
-    },
-    background: {
-      default: "#f4f4f4", // Default background color (White)
-      darker: "#f1f1f1", // Darker
-      highlight: "#f8f8f8",
-    },
-    text: {
-      primary: "#333", // Primary text color
-    },
-  },
-});
+import { theme } from "../models/StyleModel";
 
 export const ActionTypes = {
   SET_CURRENT_USER: "SET_CURRENT_USER",
@@ -41,79 +18,109 @@ export const ActionTypes = {
   DELETE_TICKET: "DELETE_TICKET",
   EDIT_TICKET: "EDIT_TICKET",
   SEND_COMMENT: "SEND_COMMENT",
+  UPDATE_STATE: "UPDATE_STATE",
+  ASSIGN_TICKET: "ASSIGN_TICKET",
+};
+
+const findAndUpdateTicket = (tickets, payload, updateFn) => {
+  const index = tickets.findIndex((ticket) => ticket.id === payload.id);
+  if (index !== -1) {
+    const updatedTickets = [...tickets];
+    updatedTickets[index] = updateFn(updatedTickets[index], payload);
+    return updatedTickets;
+  }
+  return null;
+};
+
+const addOrUpdateTicket = (tickets, payload) => {
+  const updatedTickets = findAndUpdateTicket(
+    tickets,
+    payload,
+    (ticket, payload) => {
+      return { ...ticket, ...payload };
+    }
+  );
+
+  if (updatedTickets) {
+    return updatedTickets;
+  } else {
+    return [...tickets, payload];
+  }
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
     case ActionTypes.SET_CURRENT_USER:
       return { ...state, currentUser: action.payload, selectedOption: "About" };
+
     case ActionTypes.SELECT_OPTION:
       return { ...state, selectedOption: action.payload, editingTicket: false };
+
     case ActionTypes.EDITING_TICKET:
       return {
         ...state,
         editingTicket: action.payload,
         selectedOption: "New Ticket",
       };
-    case ActionTypes.GET_MY_TICKETS: //Add fetch here
+
+    case ActionTypes.GET_MY_TICKETS: // Add fetch logic here if needed
       return state;
+
     case ActionTypes.ADD_TICKET:
-      const index = state.myTickets.findIndex(
-        (ticket) => ticket.id === action.payload.id
-      );
-
-      //If we find existing ticket, edit it instead
-      if (index !== -1) {
-        const updatedTickets = [...state.myTickets];
-        updatedTickets[index] = { ...updatedTickets[index], ...action.payload };
-
-        return {
-          ...state,
-          myTickets: updatedTickets,
-          selectedOption: "My Tickets",
-        };
-      }
-      //Else just add ticket
       return {
         ...state,
-        myTickets: [...state.myTickets, action.payload],
+        myTickets: addOrUpdateTicket(state.myTickets, action.payload),
         selectedOption: "My Tickets",
       };
+
     case ActionTypes.DELETE_TICKET:
-      const updatedTickets = state.myTickets.filter(
-        (ticket) => ticket.id !== action.payload.id
-      );
       return {
         ...state,
-        myTickets: updatedTickets,
+        myTickets: state.myTickets.filter(
+          (ticket) => ticket.id !== action.payload.id
+        ),
       };
+
     case ActionTypes.SEND_COMMENT:
-      const ix = state.myTickets.findIndex(
-        (ticket) => ticket.id === action.payload.id
-      );
+      return {
+        ...state,
+        myTickets:
+          findAndUpdateTicket(
+            state.myTickets,
+            action.payload,
+            (ticket, payload) => {
+              return {
+                ...ticket,
+                comments: [...ticket.comments, payload.comment],
+              };
+            }
+          ) || state.myTickets,
+      };
 
-      //If we find existing ticket, edit it
-      if (ix !== -1) {
-        const updatedTickets = [...state.myTickets];
-        const existingTicket = updatedTickets[ix];
-
-        const updatedComments = [...existingTicket.comments];
-
-        // Add new comment
-        updatedComments.push(action.payload.comment);
-
-        updatedTickets[ix] = {
-          ...existingTicket,
-          ...action.payload,
-          comments: updatedComments,
-        };
-
-        return {
-          ...state,
-          myTickets: updatedTickets,
-        };
-      }
-      break;
+    case ActionTypes.ASSIGN_TICKET:
+      return {
+        ...state,
+        myTickets:
+          findAndUpdateTicket(
+            state.myTickets,
+            action.payload,
+            (ticket, payload) => {
+              return { ...ticket, assigned: payload.assignedUser };
+            }
+          ) || state.myTickets,
+      };
+    case ActionTypes.UPDATE_STATE:
+      return {
+        ...state,
+        myTickets:
+          findAndUpdateTicket(
+            state.myTickets,
+            action.payload,
+            (ticket, payload) => {
+              return { ...ticket, state: payload.state };
+            }
+          ) || state.myTickets,
+      };
     default:
       return state;
   }
@@ -131,9 +138,9 @@ const initState = {
       title: "My credit card didn't work?",
       category: "Billing",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: ticketPriority.MEDIUM,
+      priority: 3,
       state: "Protected",
-      assigned: "",
+      assigned: "-",
       comments: [
         {
           id: 1,
@@ -150,9 +157,9 @@ const initState = {
       title: "My browser crashes whenever I try to log in",
       category: "Technical issue",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: ticketPriority.LOW,
+      priority: 2,
       state: "Protected",
-      assigned: "",
+      assigned: "-",
       comments: [
         {
           id: 1,
@@ -169,9 +176,9 @@ const initState = {
       title: "Can I somehow change my account name?",
       category: "Account",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: ticketPriority.VERYLOW,
+      priority: 1,
       state: "Protected",
-      assigned: "",
+      assigned: "-",
       comments: [
         {
           id: 1,
@@ -189,9 +196,9 @@ const initState = {
       title: "Not sure where this belongs, but..",
       category: "Other",
       description: "This ticket is marked as Protected and cannot be deleted",
-      priority: ticketPriority.VERYLOW,
+      priority: 0,
       state: "Protected",
-      assigned: "",
+      assigned: "-",
       comments: [],
     },
     {
@@ -202,9 +209,9 @@ const initState = {
       category: "Technical issue",
       description:
         "Hey our computer is not working properly in sales department. Could you come to take look at it? I think it is the HDMI cable or something to that related.",
-      priority: ticketPriority.HIGH,
+      priority: 1,
       state: "Protected",
-      assigned: "",
+      assigned: "-",
       comments: [],
     },
   ],
@@ -245,6 +252,7 @@ function TicketSystem() {
               (ticket) => ticket.username === systemState.currentUser
             )}
             dispatch={dispatch}
+            username={systemState.currentUser}
           />
         )}
         <footer id="footer">
