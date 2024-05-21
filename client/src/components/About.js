@@ -6,16 +6,15 @@ function About() {
     <>
       <Typography
         sx={{
-          maxWidth: "800px",
-          mb: 5,
+          maxWidth: "80vw",
           margin: "auto",
-          padding: 2,
-          fontSize: "18px",
+          mb: 5,
+          padding: 1,
         }}
       >
         This site was built as a demo project for my portfolio. It demonstrates
-        the base functionalities of a Ticket System. It can handle basic actions
-        such as:
+        the base functionalities of a Ticket System. <br />
+        It can handle basic actions such as:
         <li className="aboutList">Create ticket</li>
         <li className="aboutList">Read ticket</li>
         <li className="aboutList">Update ticket</li>

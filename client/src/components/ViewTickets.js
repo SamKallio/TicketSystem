@@ -5,12 +5,12 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TicketTable from "./TicketTable";
-import ViewTicket from "./ViewTicket";
+import TicketModal from "./TicketModal";
 import { ActionTypes } from "./TicketSystem";
 import { ticketState, categories } from "../models/TicketModel";
 import { btnStyle } from "../models/StyleModel";
 
-function ViewAllTickets({ tickets, dispatch, username }) {
+function ViewTickets({ tickets, dispatch, currentUser }) {
   const [selected, setSelected] = useState(null);
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
 
@@ -43,45 +43,41 @@ function ViewAllTickets({ tickets, dispatch, username }) {
   };
 
   return (
-    <>
-      <Box
-        sx={{
-          margin: "auto",
-          maxWidth: { xs: 320, sm: 480, md: 560 },
-          borderRadius: "4px",
-          padding: "10px",
-        }}
+    <Box
+      sx={{
+        margin: "auto",
+        maxWidth: "85%",
+      }}
+    >
+      <Tabs
+        value={currentCategory}
+        onChange={changeCategory}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
+        aria-label="scrollable force tabs example"
       >
-        <Tabs
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-          value={currentCategory}
-          onChange={changeCategory}
-          variant="scrollable"
-          scrollButtons
-          allowScrollButtonsMobile
-          aria-label="scrollable force tabs example"
-        >
-          {categories.map((v, index) => (
-            <Tab
-              sx={{ ...btnStyle, backgroundColor: "primary.highlight", ml: 1 }}
-              value={v}
-              label={v}
-              key={index}
-            />
-          ))}
-        </Tabs>
-      </Box>
+        {categories.map((v, index) => (
+          <Tab
+            sx={{
+              ...btnStyle,
+              backgroundColor: "primary.highlight",
+              margin: 1,
+            }}
+            value={v}
+            label={v}
+            key={index}
+          />
+        ))}
+      </Tabs>
       <TicketTable rows={currentTickets} showButton={showButton} />
       {selected ? (
         <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
           {selected && (
-            <ViewTicket
+            <TicketModal
               ticket={selected}
               dispatch={dispatch}
-              username={username}
+              currentUser={currentUser}
             />
           )}
           {selected.state === ticketState.PROTECTED && (
@@ -96,8 +92,8 @@ function ViewAllTickets({ tickets, dispatch, username }) {
       ) : (
         <></>
       )}
-    </>
+    </Box>
   );
 }
 
-export default ViewAllTickets;
+export default ViewTickets;

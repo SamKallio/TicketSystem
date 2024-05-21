@@ -6,19 +6,46 @@ import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import InfoIcon from "@mui/icons-material/Info";
+import HelpIcon from "@mui/icons-material/Help";
+import AllInboxIcon from "@mui/icons-material/AllInbox";
+import GridViewIcon from "@mui/icons-material/GridView";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import { userSections } from "../models/TicketModel";
+import { sections } from "../models/TicketModel";
 import { ActionTypes } from "./TicketSystem";
 
-export default function Options({ view, dispatch }) {
+export default function Options({ accessLevel, dispatch }) {
   const [open, setOpen] = React.useState(false);
+
+  const filteredSections = sections.filter(
+    (value) => value.access <= accessLevel
+  );
 
   const toggleDrawer = (newOpen) => {
     setOpen(newOpen);
+  };
+
+  const GetIcon = (text) => {
+    switch (text) {
+      case "New Ticket":
+        return <MailIcon />;
+      case "My Tickets":
+        return <AllInboxIcon />;
+      case "About":
+        return <InfoIcon />;
+      case "Help":
+        return <HelpIcon />;
+      case "Tickets":
+        return <GridViewIcon />;
+      case "Assigned":
+        return <AssignmentTurnedInIcon />;
+      default:
+        return <MailIcon />;
+    }
   };
 
   const DrawerList = (
@@ -27,57 +54,28 @@ export default function Options({ view, dispatch }) {
       role="presentation"
       onClick={() => toggleDrawer(false)}
     >
-      {view === "DefaultUser" ? (
-        <div style={{ margin: "8px", padding: "4px" }}>
-          <List>
-            <h2>Client View</h2>
-            <Divider />
-            {userSections.USER.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton
-                  value={text}
-                  onClick={() =>
-                    dispatch({
-                      type: ActionTypes.SELECT_OPTION,
-                      payload: text,
-                    })
-                  }
-                >
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      ) : (
-        <div style={{ margin: "6px", padding: "4px" }}>
-          <h2>Admin View</h2>
+      <div style={{ margin: "8px", padding: "4px" }}>
+        <List>
+          <h2>{accessLevel === 1 ? "Admin View" : "Client View"}</h2>
           <Divider />
-          <List>
-            {userSections.ADMIN.map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton
-                  value={text}
-                  onClick={() =>
-                    dispatch({
-                      type: ActionTypes.SELECT_OPTION,
-                      payload: text,
-                    })
-                  }
-                >
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      )}
+          {filteredSections.map((value, index) => (
+            <ListItem key={value.name} disablePadding>
+              <ListItemButton
+                value={value.name}
+                onClick={() =>
+                  dispatch({
+                    type: ActionTypes.SELECT_OPTION,
+                    payload: value.name,
+                  })
+                }
+              >
+                <ListItemIcon>{GetIcon(value.name)}</ListItemIcon>
+                <ListItemText primary={value.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </div>
     </Box>
   );
 

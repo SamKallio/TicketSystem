@@ -1,35 +1,31 @@
 import React from "react";
 import Ticket from "./Ticket";
-import Grid from "@mui/material/Unstable_Grid2";
+import Box from "@mui/material/Box";
 
-function MyTickets({ ticketData, dispatch, username }) {
+function MyTickets({ ticketData, dispatch, currentUser }) {
   return (
-    <>
-      <Grid
-        sx={{
-          flexGrow: 1,
-          gap: 4,
-          margin: 4,
-        }}
-        margin="auto"
-        container
-        justifyContent="center"
-        spacing={8}
-      >
-        {ticketData.length > 0 ? (
-          ticketData.map((ticket, index) => (
-            <Ticket
-              key={index}
-              ticket={ticket}
-              dispatch={dispatch}
-              username={username}
-            />
-          ))
-        ) : (
-          <p>No tickets</p>
-        )}
-      </Grid>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        gap: 4,
+        margin: "auto",
+      }}
+    >
+      {ticketData.length > 0 ? (
+        ticketData.map((ticket, index) => (
+          <Ticket
+            key={index}
+            ticket={ticket}
+            dispatch={dispatch}
+            currentUser={currentUser}
+          />
+        ))
+      ) : (
+        <p>No tickets</p>
+      )}
+    </Box>
   );
 }
 

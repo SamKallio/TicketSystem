@@ -3,20 +3,20 @@ import { DataGrid } from "@mui/x-data-grid";
 import { priorityOptions } from "../models/TicketModel";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 70 },
-  { field: "username", headerName: "Username", width: 130, sortable: false },
+  { field: "id", headerName: "ID", width: 50 },
+  { field: "username", headerName: "Username", width: 120, sortable: false },
   { field: "title", sortable: false, headerName: "Title", width: 130 },
-  { field: "category", headerName: "Category", width: 130 },
+  { field: "category", headerName: "Category", width: 140 },
   {
     field: "date",
     headerName: "Date",
-    width: 150,
+    width: 140,
   },
   {
     field: "description",
     headerName: "Description",
     sortable: false,
-    width: 500,
+    width: 200,
     valueGetter: (value, arrayRows) => `${arrayRows.description || ""}`,
   },
   {
@@ -32,7 +32,7 @@ const columns = [
   {
     field: "priority",
     headerName: "Priority",
-    width: 120,
+    width: 100,
     renderCell: (params) => {
       return <>{priorityOptions[params.value]}</>;
     },

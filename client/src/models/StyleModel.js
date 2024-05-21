@@ -1,8 +1,13 @@
 //This model contains styles that I want to use throught this site
 import { createTheme } from "@mui/material/styles";
 
+export const divStyle = {
+  mt: 5,
+  maxWidth: "50vw",
+};
+
 export const btnStyle = {
-  mt: 2,
+  mt: 1,
   color: "white",
   borderRadius: "4px",
   boxShadow: 1,
@@ -22,7 +27,7 @@ export const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 360,
+  width: 320,
   bgcolor: "background.paper",
   border: "1px solid #000",
   borderRadius: 1,

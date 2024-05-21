@@ -2,7 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
+import AddCommentIcon from "@mui/icons-material/AddComment";
 import { useState } from "react";
 
 function Reply({ sendComment }) {
@@ -15,6 +15,7 @@ function Reply({ sendComment }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     sendComment(message);
+    setMessage("");
   };
 
   return (
@@ -45,7 +46,7 @@ function Reply({ sendComment }) {
         value={message}
         onChange={handleChange}
       ></TextField>
-      <Button variant="contained" endIcon={<SendIcon />} type="submit">
+      <Button variant="contained" endIcon={<AddCommentIcon />} type="submit">
         Send Comment
       </Button>
     </Box>

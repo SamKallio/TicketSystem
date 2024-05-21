@@ -14,15 +14,15 @@ import {
 import { ActionTypes } from "./TicketSystem";
 import { btnStyle } from "../models/StyleModel";
 
-function NewTicket({ username, dispatch, ticket }) {
+function NewTicket({ username, dispatch, editTicket }) {
   const [formData, setFormData] = useState(
-    ticket ? ticket : createEmptyTicket(username)
+    editTicket !== null ? editTicket : createEmptyTicket(username)
   );
 
   useEffect(() => {
-    if (ticket) setFormData(ticket);
+    if (editTicket) setFormData(editTicket);
     else setFormData(createEmptyTicket(username));
-  }, [ticket, username]);
+  }, [editTicket, username]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -47,7 +47,6 @@ function NewTicket({ username, dispatch, ticket }) {
         backgroundColor: "background.default",
         borderRadius: "8px",
         margin: "auto",
-        marginTop: "50px",
         maxWidth: "100%",
         padding: 2,
         paddingTop: 6,

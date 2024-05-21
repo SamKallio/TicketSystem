@@ -13,12 +13,12 @@ import { modalStyle } from "../models/StyleModel";
 import { btnStyle } from "../models/StyleModel";
 import Button from "@mui/material/Button";
 
-function ViewTicket({ ticket, dispatch, username }) {
+function TicketModal({ ticket, dispatch, currentUser }) {
   const [currentComments, setCurrentComments] = useState(ticket.comments);
   const [open, setModal] = useState(false);
 
   const sendComment = (message) => {
-    const newComment = createNewComment(username, message);
+    const newComment = createNewComment(currentUser.name, message);
     setCurrentComments([...currentComments, newComment]);
 
     dispatch({
@@ -84,8 +84,15 @@ function ViewTicket({ ticket, dispatch, username }) {
               <i>No comments</i>
             </p>
           )}
-          {username === "Admin" && (
-            <Box sx={{ display: "flex", gap: 1, mt: 4, width: "100%" }}>
+          {currentUser.accessLevel === 1 && (
+            <Box
+              sx={{
+                display: "flex",
+                gap: 1,
+                mt: 4,
+                width: "100%",
+              }}
+            >
               <AssignMenu
                 dispatch={dispatch}
                 ticketId={ticket.id}
@@ -105,4 +112,4 @@ function ViewTicket({ ticket, dispatch, username }) {
   );
 }
 
-export default ViewTicket;
+export default TicketModal;

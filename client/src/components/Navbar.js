@@ -6,24 +6,26 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Options from "./Options";
 import { ActionTypes } from "./TicketSystem";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import { btnStyle } from "../models/StyleModel";
 
-function Navbar({ view, dispatch }) {
+function Navbar({ accessLevel, dispatch }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Options view={view} dispatch={dispatch} />
+          <Options accessLevel={accessLevel} dispatch={dispatch} />
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Ticket System
           </Typography>
-          {view === "DefaultUser" ? (
+          <ArrowCircleRightIcon sx={{ mr: 2, mt: 1 }} />
+          {accessLevel === 0 ? (
             <Button
-              variant="contained"
-              color="secondary"
+              sx={{ ...btnStyle, backgroundColor: "secondary.main" }}
               onClick={() =>
                 dispatch({
                   type: ActionTypes.SET_CURRENT_USER,
-                  payload: "Admin",
+                  payload: { name: "Admin", accessLevel: 1 },
                 })
               }
             >
@@ -31,12 +33,11 @@ function Navbar({ view, dispatch }) {
             </Button>
           ) : (
             <Button
-              variant="contained"
-              color="third"
+              sx={{ ...btnStyle, backgroundColor: "third.main" }}
               onClick={() =>
                 dispatch({
                   type: ActionTypes.SET_CURRENT_USER,
-                  payload: "DefaultUser",
+                  payload: { name: "DefaultUser", accessLevel: 0 },
                 })
               }
             >

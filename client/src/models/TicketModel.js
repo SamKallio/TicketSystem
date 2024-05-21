@@ -7,10 +7,14 @@ export const priorityOptions = ["Very Low", "Low", "Medium", "High"];
 
 export const categories = ["Account", "Technical issue", "Billing", "Other"];
 
-export const userSections = {
-  USER: ["New Ticket", "My Tickets", "Help", "About"],
-  ADMIN: ["New Ticket", "My Tickets", "Tickets", "Assigned", "About"],
-};
+export const sections = [
+  { name: "New Ticket", access: 0 },
+  { name: "My Tickets", access: 0 },
+  { name: "About", access: 0 },
+  { name: "Help", access: 0 },
+  { name: "Tickets", access: 1 },
+  { name: "Assigned", access: 1 },
+];
 
 export const ticketState = [
   "Unassigned",

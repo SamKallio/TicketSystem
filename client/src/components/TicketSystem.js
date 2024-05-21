@@ -4,11 +4,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { theme } from "../models/StyleModel";
+import Footer from "./Footer";
+import Help from "./Help";
 import Navbar from "./Navbar";
 import About from "./About";
 import NewTicket from "./NewTicket";
 import MyTickets from "./MyTickets";
-import ViewAllTickets from "./ViewAllTickets";
+import ViewTickets from "./ViewTickets";
 
 export const ActionTypes = {
   SET_CURRENT_USER: "SET_CURRENT_USER",
@@ -55,7 +57,7 @@ const reducer = (state, action) => {
       return { ...state, currentUser: action.payload, selectedOption: "About" };
 
     case ActionTypes.SELECT_OPTION:
-      return { ...state, selectedOption: action.payload, editingTicket: false };
+      return { ...state, selectedOption: action.payload, editingTicket: null };
 
     case ActionTypes.EDITING_TICKET:
       return {
@@ -128,7 +130,7 @@ const reducer = (state, action) => {
 };
 
 const initState = {
-  currentUser: "DefaultUser",
+  currentUser: { name: "DefaultUser", accessLevel: 0 },
   selectedOption: "About",
   editingTicket: false,
   myTickets: [
@@ -223,57 +225,52 @@ function TicketSystem() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar view={systemState.currentUser} dispatch={dispatch}></Navbar>
-      <Container
-        maxWidth="fullWidth"
-        sx={{
-          marginTop: 4,
-        }}
-      >
-        <Typography sx={{ textAlign: "center" }} variant="h5">
-          {systemState.selectedOption}
+      <Navbar
+        accessLevel={systemState.currentUser.accessLevel}
+        dispatch={dispatch}
+      ></Navbar>
+      <Container maxWidth="fullWidth">
+        <Typography sx={{ textAlign: "center", mt: 3, mb: 2 }} variant="h5">
+          {systemState.selectedOption === "New Ticket" &&
+          systemState.editingTicket
+            ? "Edit Ticket"
+            : systemState.selectedOption}
         </Typography>
         {systemState.selectedOption === "About" && <About />}
+        {systemState.selectedOption === "Help" && <Help />}
         {systemState.selectedOption === "Tickets" && (
-          <ViewAllTickets
+          <ViewTickets
             tickets={systemState.myTickets}
             dispatch={dispatch}
-            username={systemState.currentUser}
+            currentUser={systemState.currentUser}
           />
         )}
         {systemState.selectedOption === "New Ticket" && (
           <NewTicket
-            username={systemState.currentUser}
+            username={systemState.currentUser.name}
             dispatch={dispatch}
-            ticket={
-              systemState.editingTicket ? systemState.editingTicket : false
-            }
+            editTicket={systemState.editingTicket}
           />
         )}
         {systemState.selectedOption === "My Tickets" && (
           <MyTickets
             ticketData={systemState.myTickets.filter(
-              (ticket) => ticket.username === systemState.currentUser
+              (ticket) => ticket.username === systemState.currentUser.name
             )}
             dispatch={dispatch}
-            username={systemState.currentUser}
+            currentUser={systemState.currentUser}
           />
         )}
         {systemState.selectedOption === "Assigned" && (
-          <ViewAllTickets
+          <ViewTickets
             tickets={systemState.myTickets.filter(
-              (ticket) => ticket.assigned === systemState.currentUser
+              (ticket) => ticket.assigned === systemState.currentUser.name
             )}
             dispatch={dispatch}
-            username={systemState.currentUser}
+            currentUser={systemState.currentUser}
           />
         )}
-
-        <footer id="footer">
-          © Samuli Kalliomäki
-          <br />
-          Made with React and Material UI
-        </footer>
+        <Footer />
       </Container>
     </ThemeProvider>
   );
