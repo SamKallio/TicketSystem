@@ -63,6 +63,7 @@ function Ticket({ ticket, dispatch, currentUser }) {
         sx={{
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
         }}
       >
         <TicketModal

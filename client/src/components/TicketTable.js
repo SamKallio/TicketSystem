@@ -48,7 +48,7 @@ export default function TicketTable({ rows, showButton }) {
     <>
       {rows && (
         <DataGrid
-          sx={{ mt: 1 }}
+          sx={{ mt: 1, minHeight: 200 }}
           rows={arrayRows}
           columns={columns}
           initialState={{
