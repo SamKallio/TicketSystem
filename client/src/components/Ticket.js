@@ -85,9 +85,13 @@ function Ticket({ ticket, dispatch, currentUser }) {
         >
           Edit Ticket
         </Button>
-        {currentTicket.state === ticketState.PROTECTED && (
+        {currentTicket.state !== ticketState[2] && (
           <Button
-            sx={{ ...btnStyle, backgroundColor: "third.main" }}
+            sx={{
+              ...btnStyle,
+              backgroundColor: "third.main",
+              border: "1px solid black",
+            }}
             onClick={() =>
               dispatch({
                 type: ActionTypes.DELETE_TICKET,
