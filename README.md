@@ -3,7 +3,7 @@
 This project was built as a demo project for my portfolio. It demonstrates
 the base functionalities of a Ticket System. <br>
 It can handle basic actions such as:
-<ol>
+<ul>
 <li>Create ticket</li>
 <li>View ticket</li>
 <li>Update ticket</li>
@@ -15,7 +15,7 @@ It can handle basic actions such as:
 <li>Filtering and sorting of tickets</li>
 <li>Set ticket prioritities</li>
 <li>Set ticket state</li>
-</ol>
+</ul>
 Currently it does not have a backend to store data, so any changes that
 are made will be gone if you refresh the browser. <br>
 Toggle between <b>Admin View </b>
@@ -27,7 +27,7 @@ purposes.</p>
 
 # Tech
 
-<ol>
+<ul>
   <li>React</li>
     <li>Material UI</li>
-</ol>
+</ul>
