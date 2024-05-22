@@ -6,6 +6,52 @@ export const divStyle = {
   maxWidth: "50vw",
 };
 
+export const tabStyle = {
+  borderRadius: 1,
+  color: "white",
+  boxShadow: 1,
+  backgroundColor: "primary.highlight",
+  margin: 0.6,
+  "&:hover": {
+    bgcolor: "background.highlight",
+    color: "black",
+  },
+  "&.Mui-selected": {
+    bgcolor: "background.highlight",
+    color: "black",
+  },
+  maxHeight: {
+    xs: 40,
+    sm: 60,
+    md: 80,
+    lg: 100,
+  },
+  maxWidth: {
+    xs: 60, // max width for extra-small screens
+    sm: 80, // max width for small screens
+    md: 100, // max width for medium screens
+    lg: 120, // max width for large screens
+  },
+  minWidth: {
+    xs: 30, // min width for extra-small screens
+    sm: 60, // min width for small screens
+    md: 80, // min width for medium screens
+    lg: 100, // min width for large screens
+  },
+  fontSize: {
+    xs: "0.56rem", // font size for extra-small screens
+    sm: "0.66rem", // font size for small screens
+    md: "0.76rem", // font size for medium screens
+    lg: "0.86rem", // font size for large screens
+  },
+  padding: {
+    xs: 1.25,
+    sm: 1.5,
+    md: 1.75,
+    lg: 2.0,
+  },
+};
+
 export const btnStyle = {
   mt: 1,
   color: "white",

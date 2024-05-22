@@ -3,9 +3,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { priorityOptions } from "../models/TicketModel";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 50 },
+  { field: "id", headerName: "ID", width: 20 },
   { field: "username", headerName: "Username", width: 120, sortable: false },
-  { field: "title", sortable: false, headerName: "Title", width: 130 },
+  { field: "title", sortable: false, headerName: "Title", width: 200 },
   { field: "category", headerName: "Category", width: 140 },
   {
     field: "date",
@@ -45,9 +45,10 @@ export default function TicketTable({ rows, showButton }) {
   const arrayRows = Array.isArray(rows) ? rows : [rows];
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <>
       {rows && (
         <DataGrid
+          sx={{ mt: 1 }}
           rows={arrayRows}
           columns={columns}
           initialState={{
@@ -55,11 +56,11 @@ export default function TicketTable({ rows, showButton }) {
               paginationModel: { page: 0, pageSize: 5 },
             },
           }}
-          pageSizeOptions={[5, 10]}
+          pageSizeOptions={[5, 10, 25, 50]}
           onCellClick={showButton}
           onColumnHeaderClick={() => showButton(null)}
         />
       )}
-    </div>
+    </>
   );
 }

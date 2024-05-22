@@ -5,13 +5,18 @@ import Typography from "@mui/material/Typography";
 import Comment from "./Comment";
 import Reply from "./Reply";
 import { ActionTypes } from "./TicketSystem";
-import { createNewComment } from "../models/TicketModel";
+import {
+  createNewComment,
+  ticketState,
+  supportUsers,
+  priorityOptions,
+} from "../models/TicketModel";
 import { useState } from "react";
-import AssignMenu from "./AssignMenu";
-import StateMenu from "./StateMenu";
+import ModalButton from "./ModalButton";
 import { modalStyle } from "../models/StyleModel";
 import { btnStyle } from "../models/StyleModel";
 import Button from "@mui/material/Button";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 function TicketModal({ ticket, dispatch, currentUser }) {
   const [currentComments, setCurrentComments] = useState(ticket.comments);
@@ -32,7 +37,10 @@ function TicketModal({ ticket, dispatch, currentUser }) {
 
   return (
     <>
-      <Button onClick={() => setModal(true)} sx={btnStyle}>
+      <Button
+        onClick={() => setModal(true)}
+        sx={{ ...btnStyle, border: "1px solid black" }}
+      >
         Open Ticket
       </Button>
       <Modal
@@ -43,6 +51,17 @@ function TicketModal({ ticket, dispatch, currentUser }) {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={modalStyle}>
+          <Box
+            sx={{
+              width: "100%",
+              textAlign: "right",
+            }}
+          >
+            <CancelIcon
+              sx={{ color: "primary.main" }}
+              onClick={() => setModal(false)}
+            />
+          </Box>
           <Typography id="keep-mounted-modal-title" variant="h7" component="h2">
             {ticket.title}
           </Typography>
@@ -52,6 +71,7 @@ function TicketModal({ ticket, dispatch, currentUser }) {
               backgroundColor: "background.darker",
               padding: 1,
               borderRadius: 2,
+              border: "1px solid black",
             }}
           >
             <Typography id="keep-mounted-modal-description">
@@ -71,7 +91,7 @@ function TicketModal({ ticket, dispatch, currentUser }) {
             id="keep-mounted-modal-title"
             variant="h7"
             component="h3"
-            sx={{ mt: 5 }}
+            sx={{ mt: 4 }}
           >
             Comments:
           </Typography>
@@ -89,19 +109,31 @@ function TicketModal({ ticket, dispatch, currentUser }) {
               sx={{
                 display: "flex",
                 gap: 1,
+                justifyContent: "center",
                 mt: 4,
                 width: "100%",
               }}
             >
-              <AssignMenu
+              <ModalButton
                 dispatch={dispatch}
                 ticketId={ticket.id}
-                assignedUser={ticket.assigned}
+                currentValue={ticket.assigned}
+                options={supportUsers}
+                header={"Assigned"}
               />
-              <StateMenu
+              <ModalButton
                 dispatch={dispatch}
                 ticketId={ticket.id}
-                currentState={ticket.state}
+                currentValue={ticket.state}
+                options={ticketState}
+                header={"State"}
+              />
+              <ModalButton
+                dispatch={dispatch}
+                ticketId={ticket.id}
+                currentValue={ticket.priority}
+                options={priorityOptions}
+                header={"Priority"}
               />
             </Box>
           )}

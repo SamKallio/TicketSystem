@@ -46,10 +46,14 @@ function NewTicket({ username, dispatch, editTicket }) {
         "& .MuiTextField-root": { m: 1 },
         backgroundColor: "background.default",
         borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
         margin: "auto",
-        maxWidth: "100%",
-        padding: 2,
-        paddingTop: 6,
+        maxWidth: 340,
+        minWidth: 200,
+        padding: 5,
+        gap: 3,
         boxShadow: 1,
         "&:hover": {
           bgcolor: "background.highlight",
@@ -57,13 +61,6 @@ function NewTicket({ username, dispatch, editTicket }) {
       }}
       noValidate
       autoComplete="off"
-      display="flex"
-      flexDirection="column"
-      textAlign="center"
-      alignItems="center"
-      gap={2}
-      p={4}
-      width={400}
     >
       <TextField
         required
@@ -134,11 +131,29 @@ function NewTicket({ username, dispatch, editTicket }) {
       {formData.description.length >= ticketRules.minDescLength &&
       formData.title.length >= ticketRules.minTitleLength &&
       formData.category ? (
-        <Button variant="contained" endIcon={<SendIcon />} type="submit">
+        <Button
+          sx={{
+            ...btnStyle,
+            backgroundColor: "primary.main",
+            alignSelf: "center",
+            border: "1px solid black",
+          }}
+          endIcon={<SendIcon />}
+          type="submit"
+        >
           Submit
         </Button>
       ) : (
-        <Button sx={{ btnStyle }} endIcon={<SendIcon />} type="submit" disabled>
+        <Button
+          sx={{
+            ...btnStyle,
+            alignSelf: "center",
+            border: "1px solid black",
+          }}
+          endIcon={<SendIcon />}
+          type="submit"
+          disabled
+        >
           Submit
         </Button>
       )}

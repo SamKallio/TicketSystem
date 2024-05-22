@@ -1,0 +1,121 @@
+[
+  {
+    "id": 1,
+    "date": "09/05/2024, 10:35",
+    "username": "Andy",
+    "title": "My credit card didn't work?",
+    "category": "Billing",
+    "description": "This ticket is marked as Protected and cannot be deleted",
+    "priority": 3,
+    "state": "Protected",
+    "assigned": "Admin",
+    "comments": [
+      {
+        "id": 1,
+        "content": "I forgot to mention that I have Visa Electron",
+        "username": "Andy",
+        "date": "12/05/2024, 11:42"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "date": "09/05/2024, 11:01",
+    "username": "John",
+    "title": "My browser crashes whenever I try to log in",
+    "category": "Technical issue",
+    "description": "This ticket is marked as Protected and cannot be deleted",
+    "priority": 2,
+    "state": "Protected",
+    "assigned": "-",
+    "comments": [
+      {
+        "id": 1,
+        "content": "Any ideas??",
+        "username": "John",
+        "date": "11/05/2024, 16:42"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "date": "13/05/2024, 13:02",
+    "username": "David",
+    "title": "Can I somehow change my account name?",
+    "category": "Account",
+    "description": "This ticket is marked as Protected and cannot be deleted",
+    "priority": 1,
+    "state": "Protected",
+    "assigned": "-",
+    "comments": [
+      {
+        "id": 1,
+        "content": "Sorry for being pesky, but how long does this process take?",
+        "username": "David",
+        "date": "15/05/2024, 18:28"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "date": "13/05/2024, 15:37",
+    "username": "DefaultUser",
+    "title": "Not sure where this belongs, but..",
+    "category": "Other",
+    "description": "This ticket is marked as Protected and cannot be deleted",
+    "priority": 0,
+    "state": "Protected",
+    "assigned": "-",
+    "comments": []
+  },
+  {
+    "id": 6,
+    "date": "16/05/2024, 17:37",
+    "username": "Admin",
+    "title": "Internal Ticket Example",
+    "category": "Technical issue",
+    "description": "Hey our computer is not working properly in sales department. Could you come to take look at it? I think it is the HDMI cable or something to that related.",
+    "priority": 1,
+    "state": "Protected",
+    "assigned": "-",
+    "comments": []
+  },
+  {
+    "id": 7,
+    "date": "22/05/2024, 6:23",
+    "username": "DefaultUser",
+    "title": "Can you take a look at my address?",
+    "category": "Account",
+    "description": "I am unable to set my account address correctly. Can you help me out?",
+    "priority": 1,
+    "state": "Underwork",
+    "assigned": "-",
+    "comments": [
+      {
+        "id": 1,
+        "content": "Which part of the Address you have problems with? Postal code?",
+        "username": "Admin",
+        "date": "23/05/2024, 12:12"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "date": "17/05/2024, 12:21",
+    "username": "Admin",
+    "title": "Internal Ticket Example",
+    "category": "Other",
+    "description": "Help please.",
+    "priority": 3,
+    "state": "Underwork",
+    "assigned": "Admin",
+    "comments": [
+      {
+        "id": 1,
+        "content": "Adding more information in a bit..",
+        "username": "Admin",
+        "date": "17/05/2024, 12:28"
+      }
+    ]
+  }
+]

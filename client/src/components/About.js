@@ -22,12 +22,10 @@ function About() {
         <li className="aboutList">Assign ticket</li>
         <li className="aboutList">Close ticket</li>
         <li className="aboutList">Comment ticket</li>
-        Currently it does not have backend to store data, so any changes are
-        gone if you refresh the browser. <br />
+        Currently it does not have a backend to store data, so any changes that
+        are made will be gone if you refresh the browser. <br />
         Toggle between <b>Admin View </b>
-        or <b>Client View</b> in order to see how it works for both sides. For
-        example, the Client can only see it's own tickets and Admin can access
-        all tickets and do actions on them.
+        or <b>Client View</b> to see how it works for both sides.
         <br />
         <br />
         Some tickets are marked as <b>"Protected"</b> for demonstration

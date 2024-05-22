@@ -5,29 +5,39 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { ActionTypes } from "./TicketSystem";
+import { priorityOptions } from "../models/TicketModel";
 
-const supportUsers = ["Admin", "Support Dave", "Support Andy"];
-
-export default function AssignMenu({ dispatch, ticketId, assignedUser }) {
+export default function ModalButton({
+  dispatch,
+  ticketId,
+  currentValue,
+  options,
+  header,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [selectedUser, setSelectedUser] = React.useState(assignedUser);
+  const [selected, setSelected] = React.useState(currentValue);
   const open = Boolean(anchorEl);
 
   const handleClickListItem = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMenuItemClick = (event, user) => {
-    setSelectedUser(user);
-    setAnchorEl(null);
+  const handleMenuItemClick = (event, value, index) => {
+    if (header) {
+      setSelected(value);
+      setAnchorEl(null);
 
-    dispatch({
-      type: ActionTypes.ASSIGN_TICKET,
-      payload: {
-        id: ticketId,
-        assignedUser: user,
-      },
-    });
+      const field = header.toLowerCase();
+
+      dispatch({
+        type: ActionTypes.UPDATE_FIELD,
+        payload: {
+          id: ticketId,
+          value: field === "priority" ? index : value,
+          fieldName: field,
+        },
+      });
+    }
   };
 
   const handleClose = () => {
@@ -40,25 +50,27 @@ export default function AssignMenu({ dispatch, ticketId, assignedUser }) {
         component="nav"
         aria-label="Device settings"
         sx={{
-          bgcolor: "primary.highlight",
-          borderRadius: 2,
+          bgcolor: "secondary.main",
+          borderRadius: 4,
+          border: "2px solid green",
           padding: 0,
           maxWidth: "180px",
           maxHeight: "90px",
-          boxShadow: 1,
+          boxShadow: 2,
         }}
       >
         <ListItemButton
           id="lock-button"
           aria-haspopup="listbox"
           aria-controls="lock-menu"
-          aria-label="Assigned to"
+          aria-label={header}
           aria-expanded={open ? "true" : undefined}
           onClick={handleClickListItem}
+          disabled={currentValue === "Protected"}
         >
           <ListItemText
-            primary="Assigned to:"
-            secondary={selectedUser || "-"}
+            primary={header + ":" || ""}
+            secondary={priorityOptions[selected] || selected || "-"}
             sx={{
               "& .MuiTypography-root": {
                 color: "white",
@@ -77,11 +89,11 @@ export default function AssignMenu({ dispatch, ticketId, assignedUser }) {
           role: "listbox",
         }}
       >
-        {supportUsers.map((option, index) => (
+        {options.map((option, index) => (
           <MenuItem
             key={option}
-            selected={option === selectedUser}
-            onClick={(event) => handleMenuItemClick(event, option)}
+            selected={option === selected}
+            onClick={(event) => handleMenuItemClick(event, option, index)}
           >
             {option}
           </MenuItem>
