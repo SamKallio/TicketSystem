@@ -4,17 +4,17 @@ This project was built as a demo project for my portfolio. It demonstrates
 the base functionalities of a Ticket System. <br>
 It can handle basic actions such as:
 <ol>
-<li className="aboutList">Create ticket</li>
-<li className="aboutList">View ticket</li>
-<li className="aboutList">Update ticket</li>
-<li className="aboutList">Delete ticket</li>
-<li className="aboutList">Assign ticket to User</li>
-<li className="aboutList">Comment ticket</li>
-<li className="aboutList">View comments</li>
-<li className="aboutList">View all tickets</li>
-<li className="aboutList">Filtering and sorting of tickets</li>
-<li className="aboutList">Set ticket prioritities</li>
-<li className="aboutList">Set ticket state</li>
+<li>Create ticket</li>
+<li>View ticket</li>
+<li>Update ticket</li>
+<li>Delete ticket</li>
+<li>Assign ticket to User</li>
+<li>Comment ticket</li>
+<li>View comments</li>
+<li>View all tickets</li>
+<li>Filtering and sorting of tickets</li>
+<li>Set ticket prioritities</li>
+<li>Set ticket state</li>
 </ol>
 Currently it does not have a backend to store data, so any changes that
 are made will be gone if you refresh the browser. <br>
@@ -24,3 +24,10 @@ or <b>Client View</b> to see how it works for both sides.
 <br>
 Some sample tickets are marked as <b>"Protected"</b> for demonstration
 purposes.</p>
+
+# Tech
+
+<ol>
+  <li>React</li>
+    <li>Material UI</li>
+</ol>
