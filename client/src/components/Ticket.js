@@ -71,7 +71,11 @@ function Ticket({ ticket, dispatch, currentUser }) {
           currentUser={currentUser}
         />
         <Button
-          sx={{ ...btnStyle, backgroundColor: "primary.main" }}
+          sx={{
+            ...btnStyle,
+            backgroundColor: "primary.main",
+            border: "1px solid black",
+          }}
           onClick={() =>
             dispatch({
               type: ActionTypes.EDITING_TICKET,

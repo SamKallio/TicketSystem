@@ -11,6 +11,7 @@ function Comment({ comment }) {
         width: "100%",
         maxWidth: "100%",
         backgroundColor: "background.darker",
+        border: "1px solid black",
         borderRadius: 2,
         padding: 1,
       }}

@@ -46,7 +46,12 @@ function Reply({ sendComment }) {
         value={message}
         onChange={handleChange}
       ></TextField>
-      <Button variant="contained" endIcon={<AddCommentIcon />} type="submit">
+      <Button
+        sx={{ border: "1px solid black" }}
+        variant="contained"
+        endIcon={<AddCommentIcon />}
+        type="submit"
+      >
         Send Comment
       </Button>
     </Box>

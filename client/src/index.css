@@ -24,3 +24,7 @@ body {
 .whiteText {
   color: "white";
 }
+
+.css-145v6pe-MuiButtonBase-root-MuiTabScrollButton-root {
+  width: 25px !important;
+}

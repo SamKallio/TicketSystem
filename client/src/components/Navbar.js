@@ -15,7 +15,7 @@ function Navbar({ accessLevel, dispatch }) {
       <AppBar position="static">
         <Toolbar>
           <Options accessLevel={accessLevel} dispatch={dispatch} />
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="body1" component="div" sx={{ flexGrow: 1 }}>
             Ticket System
           </Typography>
           <ArrowCircleRightIcon sx={{ mr: 2, mt: 1 }} />
