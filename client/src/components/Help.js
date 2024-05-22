@@ -17,7 +17,7 @@ export default function Help() {
         <Typography variant="h6">How to create a Ticket?</Typography>
       </Divider>
       <br />
-      <Typography variant="body1" sx={{ mt: 1 }}>
+      <Typography variant="body1">
         1. Click the Menu Icon located on the Top left and select
         <b>"New Ticket"</b>
         <br />
@@ -32,7 +32,7 @@ export default function Help() {
         <Typography variant="h6">How to edit my Ticket?</Typography>
       </Divider>
       <br />
-      <Typography variant="body1" sx={{ mt: 1 }}>
+      <Typography variant="body1">
         1. Click the Menu Icon located on the Top left and select
         <b>"My Tickets"</b>
         <br />
@@ -46,7 +46,7 @@ export default function Help() {
         <Typography variant="h6">How to view my Ticket?</Typography>
       </Divider>
       <br />
-      <Typography variant="body1" sx={{ mt: 1 }}>
+      <Typography variant="body1">
         1. Click the Menu Icon located on the Top left and select "My Tickets"
         <br />
         <br />
