@@ -1,4 +1,5 @@
-# Ticket System 
+# Ticket System
+
 <p>
 This project was built as a demo project for my portfolio. It demonstrates
 the base functionalities of a Ticket System. <br>
@@ -8,13 +9,13 @@ It can handle basic actions such as:
 <li>View ticket</li>
 <li>Update ticket</li>
 <li>Delete ticket</li>
-<li>Assign ticket to User</li>
+<li>Assign ticket to Team Member</li>
 <li>Comment ticket</li>
 <li>View comments</li>
 <li>View all tickets</li>
-<li>Filtering and sorting of tickets</li>
+<li>Filtering and sorting</li>
 <li>Set ticket prioritities</li>
-<li>Set ticket state</li>
+<li>Set ticket states</li>
 </ul>
 Currently it does not have a backend to store data, so any changes that
 are made will be gone if you refresh the browser. <br>
