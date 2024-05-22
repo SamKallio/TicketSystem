@@ -12,10 +12,10 @@ export const categories = ["Account", "Technical issue", "Billing", "Other"];
 export const sections = [
   { name: "New Ticket", access: 0 },
   { name: "My Tickets", access: 0 },
-  { name: "About", access: 0 },
-  { name: "Help", access: 0 },
   { name: "Tickets", access: 1 },
   { name: "Assigned", access: 1 },
+  { name: "About", access: 0 },
+  { name: "Help", access: 0 },
 ];
 
 export const ticketState = ["Underwork", "Completed", "Protected"];
