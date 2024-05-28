@@ -21,10 +21,8 @@ export default function Help() {
         1. Click the Menu Icon located on the Top left and select
         <b>"New Ticket"</b>
         <br />
-        <br />
         2. Fill the Required fields and try to explain how to reproduce your
         issue or bug
-        <br />
         <br />
         3. Press <b>"Submit"</b> to send your ticket
       </Typography>
@@ -36,9 +34,7 @@ export default function Help() {
         1. Click the Menu Icon located on the Top left and select
         <b>"My Tickets"</b>
         <br />
-        <br />
         2. Locate your ticket and press <b>"Edit ticket"</b>
-        <br />
         <br />
         3. Once you are done with changes and press <b>"Submit"</b>
       </Typography>
@@ -48,7 +44,6 @@ export default function Help() {
       <br />
       <Typography variant="body1">
         1. Click the Menu Icon located on the Top left and select "My Tickets"
-        <br />
         <br />
         2. Locate your ticket and press <b>"Open Ticket"</b>
       </Typography>

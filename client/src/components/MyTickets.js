@@ -1,13 +1,16 @@
 import React from "react";
 import Ticket from "./Ticket";
-import Box from "@mui/material/Box";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 
 function MyTickets({ ticketData, dispatch, currentUser }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: isMobile ? "column" : "row",
         justifyContent: "center",
         gap: 4,
         margin: "auto",
