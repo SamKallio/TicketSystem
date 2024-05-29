@@ -5,12 +5,11 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { ActionTypes } from "./TicketSystem";
 import { ticketState } from "../models/TicketModel";
-import TicketModal from "./TicketModal";
 import { btnStyle } from "../models/StyleModel";
 
-function Ticket({ ticket, dispatch, currentUser }) {
+function Ticket({ ticket, dispatch, openTicket }) {
   const [currentTicket, setCurrentTicket] = useState(ticket);
-  const [openModal, setOpenModal] = useState(false);
+
   return (
     <Box
       sx={{
@@ -68,16 +67,8 @@ function Ticket({ ticket, dispatch, currentUser }) {
           justifyContent: "center",
         }}
       >
-        {openModal && (
-          <TicketModal
-            ticket={currentTicket}
-            dispatch={dispatch}
-            currentUser={currentUser}
-            setOpenModal={setOpenModal}
-          />
-        )}
         <Button
-          onClick={() => setOpenModal(true)}
+          onClick={() => openTicket(currentTicket)}
           sx={{ ...btnStyle, border: "1px solid black" }}
         >
           Open Ticket
