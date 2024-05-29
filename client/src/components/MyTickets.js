@@ -17,7 +17,7 @@ function MyTickets({ ticketData, dispatch, currentUser }) {
       {ticketData.length > 0 ? (
         ticketData.map((ticket, index) => (
           <Ticket
-            key={index}
+            key={ticket.comments + index}
             ticket={ticket}
             dispatch={dispatch}
             currentUser={currentUser}

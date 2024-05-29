@@ -68,13 +68,14 @@ function Ticket({ ticket, dispatch, currentUser }) {
           justifyContent: "center",
         }}
       >
-        <TicketModal
-          ticket={currentTicket}
-          dispatch={dispatch}
-          currentUser={currentUser}
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-        />
+        {openModal && (
+          <TicketModal
+            ticket={currentTicket}
+            dispatch={dispatch}
+            currentUser={currentUser}
+            setOpenModal={setOpenModal}
+          />
+        )}
         <Button
           onClick={() => setOpenModal(true)}
           sx={{ ...btnStyle, border: "1px solid black" }}

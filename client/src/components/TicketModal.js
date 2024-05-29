@@ -21,7 +21,6 @@ function TicketModal({ ticket, dispatch, currentUser, setOpenModal }) {
 
   const sendComment = (message) => {
     const newComment = createNewComment(currentUser.name, message);
-    setCurrentComments([...ticket.comments, newComment]);
 
     dispatch({
       type: ActionTypes.SEND_COMMENT,
@@ -30,6 +29,8 @@ function TicketModal({ ticket, dispatch, currentUser, setOpenModal }) {
         comment: newComment,
       },
     });
+
+    setCurrentComments((prevComments) => [...prevComments, newComment]);
   };
 
   return (
