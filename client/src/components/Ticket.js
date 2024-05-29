@@ -10,18 +10,20 @@ import { btnStyle } from "../models/StyleModel";
 
 function Ticket({ ticket, dispatch, currentUser }) {
   const [currentTicket, setCurrentTicket] = useState(ticket);
+  const [openModal, setOpenModal] = useState(false);
   return (
     <Box
       sx={{
         backgroundColor: "background.default",
         borderRadius: 2,
         boxShadow: 2,
-        padding: 2,
+        padding: 3,
         gap: 1.75,
-        width: 260,
-        minWidth: 200,
+        maxWidth: "fit-content",
+        minWidth: 260,
         display: "flex",
         flexDirection: "column",
+        margin: 1,
         textAlign: "center",
         "&:hover": {
           bgcolor: "background.highlight",
@@ -70,7 +72,15 @@ function Ticket({ ticket, dispatch, currentUser }) {
           ticket={currentTicket}
           dispatch={dispatch}
           currentUser={currentUser}
+          openModal={openModal}
+          setOpenModal={setOpenModal}
         />
+        <Button
+          onClick={() => setOpenModal(true)}
+          sx={{ ...btnStyle, border: "1px solid black" }}
+        >
+          Open Ticket
+        </Button>
         <Button
           sx={{
             ...btnStyle,

@@ -41,7 +41,7 @@ const columns = [
   },
 ];
 
-export default function TicketTable({ rows, showButton }) {
+export default function TicketTable({ rows, setSelected }) {
   const arrayRows = Array.isArray(rows) ? rows : [rows];
 
   return (
@@ -57,8 +57,8 @@ export default function TicketTable({ rows, showButton }) {
             },
           }}
           pageSizeOptions={[5, 10, 25, 50]}
-          onCellClick={showButton}
-          onColumnHeaderClick={() => showButton(null)}
+          onCellClick={(params) => setSelected(params.row)}
+          onColumnHeaderClick={() => setSelected(null)}
         />
       )}
     </>

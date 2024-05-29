@@ -12,8 +12,6 @@ function MyTickets({ ticketData, dispatch, currentUser }) {
         display: "flex",
         flexDirection: isMobile ? "column" : "row",
         justifyContent: "center",
-        gap: 4,
-        margin: "auto",
       }}
     >
       {ticketData.length > 0 ? (

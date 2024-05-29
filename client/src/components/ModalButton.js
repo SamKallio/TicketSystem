@@ -54,8 +54,8 @@ export default function ModalButton({
           borderRadius: 4,
           border: "2px solid green",
           padding: 0,
-          maxWidth: "100px",
-          maxHeight: "70px",
+          maxWidth: "fit-content",
+          maxHeight: "fit-content",
           boxShadow: 2,
         }}
       >

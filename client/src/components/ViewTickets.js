@@ -9,23 +9,12 @@ import { btnStyle, tabStyle } from "../models/StyleModel";
 
 function ViewTickets({ tickets, dispatch, currentUser }) {
   const [selected, setSelected] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(categories[0]);
 
   const currentTickets = tickets.filter(
     (ticket) => ticket.category === currentCategory
   );
-
-  const showButton = (params) => {
-    if (!params) {
-      setSelected(null);
-      return;
-    }
-    if (params.value === true) setSelected(null);
-    else
-      setSelected((prevSelected) =>
-        prevSelected && prevSelected.id === params.row.id ? null : params.row
-      );
-  };
 
   const changeCategory = (event, newCategory) => {
     setCurrentCategory(newCategory);
@@ -46,6 +35,14 @@ function ViewTickets({ tickets, dispatch, currentUser }) {
         maxWidth: "95%",
       }}
     >
+      {selected && openModal && (
+        <TicketModal
+          ticket={selected}
+          dispatch={dispatch}
+          currentUser={currentUser}
+          setOpenModal={setOpenModal}
+        />
+      )}
       <Tabs
         sx={{ width: "100%", margin: "auto" }}
         value={currentCategory}
@@ -59,16 +56,15 @@ function ViewTickets({ tickets, dispatch, currentUser }) {
           <Tab sx={tabStyle} value={v} label={v} key={index} />
         ))}
       </Tabs>
-      <TicketTable rows={currentTickets} showButton={showButton} />
+      <TicketTable rows={currentTickets} setSelected={setSelected} />
       {selected ? (
         <Box sx={{ display: "flex", gap: 1, mt: 2 }}>
-          {selected && (
-            <TicketModal
-              ticket={selected}
-              dispatch={dispatch}
-              currentUser={currentUser}
-            />
-          )}
+          <Button
+            onClick={() => setOpenModal(true)}
+            sx={{ ...btnStyle, border: "1px solid black" }}
+          >
+            Open Ticket
+          </Button>
           <Button
             onClick={() => deleteTicket()}
             sx={{

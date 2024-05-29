@@ -14,17 +14,14 @@ import {
 import { useState } from "react";
 import ModalButton from "./ModalButton";
 import { modalStyle } from "../models/StyleModel";
-import { btnStyle } from "../models/StyleModel";
-import Button from "@mui/material/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-function TicketModal({ ticket, dispatch, currentUser }) {
+function TicketModal({ ticket, dispatch, currentUser, setOpenModal }) {
   const [currentComments, setCurrentComments] = useState(ticket.comments);
-  const [open, setModal] = useState(false);
 
   const sendComment = (message) => {
     const newComment = createNewComment(currentUser.name, message);
-    setCurrentComments([...currentComments, newComment]);
+    setCurrentComments([...ticket.comments, newComment]);
 
     dispatch({
       type: ActionTypes.SEND_COMMENT,
@@ -37,16 +34,10 @@ function TicketModal({ ticket, dispatch, currentUser }) {
 
   return (
     <>
-      <Button
-        onClick={() => setModal(true)}
-        sx={{ ...btnStyle, border: "1px solid black" }}
-      >
-        Open Ticket
-      </Button>
       <Modal
         keepMounted
-        open={open}
-        onClose={() => setModal(false)}
+        open={true}
+        onClose={() => setOpenModal(false)}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
       >
@@ -59,7 +50,7 @@ function TicketModal({ ticket, dispatch, currentUser }) {
           >
             <CancelIcon
               sx={{ color: "primary.main" }}
-              onClick={() => setModal(false)}
+              onClick={() => setOpenModal(false)}
             />
           </Box>
           <Typography id="keep-mounted-modal-title" variant="h7" component="h2">
@@ -125,7 +116,7 @@ function TicketModal({ ticket, dispatch, currentUser }) {
                 dispatch={dispatch}
                 ticketId={ticket.id}
                 currentValue={ticket.state}
-                options={ticketState}
+                options={ticketState.filter((ticket) => ticket !== "Protected")}
                 header={"State"}
               />
               <ModalButton

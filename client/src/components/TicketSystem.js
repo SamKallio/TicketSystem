@@ -94,7 +94,6 @@ const reducer = (state, action) => {
           ) || state.myTickets,
       };
     case ActionTypes.UPDATE_FIELD:
-      console.log(action.payload);
       return {
         ...state,
         myTickets:
@@ -118,9 +117,9 @@ const initState = {
   myTickets: Tickets,
 };
 
+//Conditional rendering of components, but should use Routing if this was a real project. For this scope and purpose its "ok".
 function TicketSystem() {
   const [systemState, dispatch] = useReducer(reducer, initState);
-
   return (
     <ThemeProvider theme={theme}>
       <Navbar
